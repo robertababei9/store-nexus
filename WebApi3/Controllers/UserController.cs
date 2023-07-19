@@ -1,11 +1,13 @@
 ﻿using Authentication.Services;
 using Domain.Entities;
 using Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PasswordHashExample.WebAPI.Resources;
 
 namespace store_nexus.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
@@ -47,15 +49,16 @@ namespace store_nexus.Controllers
             return Ok(userToAdd);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("login")]
         public async Task<IActionResult> Login([FromQuery] LoginResource loginModel)
         {
             try
             {
-                var result = await _userService.Login(loginModel, CancellationToken.None);
+                var token = await _userService.Login(loginModel, CancellationToken.None);
 
-                return Ok(result.Id);
+                return Ok(token);
             }
             catch (Exception e)
             {
@@ -63,6 +66,7 @@ namespace store_nexus.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterResource registerModel)

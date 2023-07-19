@@ -12,6 +12,7 @@ C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\FluentValidat
 C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\Humanizer.dll
 C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\MediatR.dll
 C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\MediatR.Contracts.dll
+C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\rababei\vs_workspace\store-nexus\WebApi3\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll

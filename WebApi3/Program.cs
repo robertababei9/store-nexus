@@ -3,7 +3,10 @@ using Authentication.Services;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// configure services
+builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("ApplicationSettings"));
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(
@@ -24,9 +29,39 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IUserService, UserService>();
 
+
 builder.Services
     .AddApplication()
     .AddInfrastructure();
+
+
+
+
+// JWT auth
+IConfiguration appSettingsSection = builder.Configuration.GetSection("ApplicationSettings");
+ApplicationSettings appSettings = appSettingsSection.Get<ApplicationSettings>();
+byte[] key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+var tokenValidationParameters = new TokenValidationParameters
+{
+    IssuerSigningKey = new SymmetricSecurityKey(key),
+    ValidateIssuer = false,
+    ValidateAudience = false,
+    ValidateIssuerSigningKey = true,
+};
+
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(x =>
+{
+    x.SaveToken = true;
+    x.TokenValidationParameters = tokenValidationParameters;
+});
+
+builder.Services.AddAuthorization();
 
 
 var app = builder.Build();
@@ -40,6 +75,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

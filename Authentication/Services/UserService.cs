@@ -1,27 +1,26 @@
 ﻿using Application.Repositories.Contracts;
 using Domain.Entities;
+using Microsoft.Extensions.Options;
 using PasswordHashExample.WebAPI.Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Authentication.Services
 {
     public sealed class UserService : IUserService
     {
+        private readonly IOptions<ApplicationSettings> _appSettings;
         private readonly IUserRepository _userRepository;
         private readonly string _pepper;
         private readonly int _iteration = 3;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IOptions<ApplicationSettings> appSettings)
         {
+            _appSettings = appSettings;
             _userRepository = userRepository;
             _pepper = Environment.GetEnvironmentVariable("PasswordHashExamplePepper");
         }
 
-        public async Task<UserResource> Login(LoginResource resource, CancellationToken cancellationToken)
+        public async Task<string> Login(LoginResource resource, CancellationToken cancellationToken)
         {
             //var user = await _context.Users
             //    .FirstOrDefaultAsync(x => x.Username == resource.Username, cancellationToken);
@@ -35,7 +34,11 @@ namespace Authentication.Services
             if (user.PasswordHash != passwordHash)
                 throw new Exception("Username or password did not match.");
 
-            return new UserResource(user.Id, user.Email);
+            // authentication successful so generate jwt token
+            string secretKey = _appSettings.Value.Secret;
+            string token = new JwtGenerator().GetToken(secretKey, user);
+
+            return token;
 
 
         }
