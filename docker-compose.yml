@@ -1,0 +1,18 @@
+version: "3.9"  # optional since v1.27.0
+services:
+    web_api_nexus:
+        build: . # build the Docker image 
+        container_name: web_api_nexus_store
+        ports:
+            - "5000:80"
+        depends_on:
+            - sql
+        command: ["dotnet", "ef", "database update"]
+    sql:
+        image: "mcr.microsoft.com/mssql/server:2017-latest"
+        container_name: sql_server2017
+        ports: # not actually needed, because the two services are on the same network
+            - "1433:1433" 
+        environment:
+            - ACCEPT_EULA=y
+            - SA_PASSWORD=A&VeryComplex123Password

@@ -80,4 +80,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Automatically run migrations if any
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<ApplicationContext>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+}
+
 app.Run();

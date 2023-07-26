@@ -49,6 +49,7 @@ namespace store_nexus.Controllers
             return Ok(userToAdd);
         }
 
+        // TODO: To be changed to POST method ... how tf to send the password in query ... wtf is wrong with you
         [AllowAnonymous]
         [HttpGet]
         [Route("login")]
