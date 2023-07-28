@@ -2,12 +2,12 @@ version: "3.9"  # optional since v1.27.0
 services:
     web_api_nexus:
         build: . # build the Docker image 
+        image: storenexusapi.azurecr.io/store-nexus:latest
         container_name: web_api_nexus_store
         ports:
-            - "5000:80"
+            - "80:80"
         depends_on:
             - sql
-        command: ["dotnet", "ef", "database update"]
     sql:
         image: "mcr.microsoft.com/mssql/server:2017-latest"
         container_name: sql_server2017

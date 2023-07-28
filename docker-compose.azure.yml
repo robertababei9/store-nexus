@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+    web_api_nexus:
+        image: storenexusapi.azurecr.io/store-nexus:latest
+        ports:
+            - "80:80"
+    sql:
+        image: "storenexusapi.azurecr.io/store-nexus-db:latest"
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=A&VeryComplex123Password
+        ports:
+            - "1433:1433" 
