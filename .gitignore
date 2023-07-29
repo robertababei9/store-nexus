@@ -1,12 +1,12 @@
 # ASP.NET build and debugging folders
-obj/
-bin/
+**/bin/
+**/obj/
 
 # Visual Studio files
-.vs/
-*.suo
-*.user
-*.sln.docstates
+**/.vs/
+**/*.suo
+**/*.user
+**/*.sln.docstates
 
 # Build results
 [Dd]ebug/
@@ -79,10 +79,10 @@ _TeamCity*
 # Click-Once and publishing
 publish/
 *.publish.xml
+*.azurePubxml
 
 # Publish Web Output
 *.[Pp]ublish.xml
-*.azurePubxml
 
 # NuGet Packages Directory
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
@@ -101,11 +101,3 @@ UpgradeLog*.htm
 *.publishsettings
 *.csproj.user
 *.cache
-*.vsix
-.project
-*.rsuser
-*.rdl.data
-*.dbmdl
-*.jfm
-*.psess
-*.scc
