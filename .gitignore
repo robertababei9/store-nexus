@@ -1,0 +1,111 @@
+# ASP.NET build and debugging folders
+obj/
+bin/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*_i.c
+*_p.c
+*_i.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.log
+*.tlog
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUNIT
+*.VisualState.xml
+TestResult.xml
+
+# Resharper cache
+_ReSharper*/
+*.resharper
+*.DotSettings.user
+
+# JustCode
+.JustCode
+
+# TeamCity
+_TeamCity*
+
+# DotCover
+*.dotCover
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+# Installshield output folder
+[Ee]xpress/
+
+# DocProject folder
+[Dd]oc[Ss]tyle.*
+
+# Click-Once and publishing
+publish/
+*.publish.xml
+
+# Publish Web Output
+*.[Pp]ublish.xml
+*.azurePubxml
+
+# NuGet Packages Directory
+## TODO: If you have NuGet Package Restore enabled, uncomment the next line
+#packages/
+
+# Others
+ReSharperTools/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+.vscode/
+*.nupkg
+*.zip
+*.pfx
+*.snk
+*.publishsettings
+*.csproj.user
+*.cache
+*.vsix
+.project
+*.rsuser
+*.rdl.data
+*.dbmdl
+*.jfm
+*.psess
+*.scc
