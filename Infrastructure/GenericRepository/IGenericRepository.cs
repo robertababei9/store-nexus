@@ -17,6 +17,8 @@ namespace Infrastructure.GenericRepository
 
         Task SaveChangesAsync();
 
+
+        IQueryable<T> GetAllQueryable();
         Task<TResult> FirstOrDefaultAsync<TResult>(Expression<Func<T, bool>> filterExpr, Expression<Func<T, TResult>> selectExpr);
     }
 }

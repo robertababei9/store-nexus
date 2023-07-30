@@ -1,10 +1,5 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.ModelBuilders
 {
@@ -16,6 +11,11 @@ namespace Domain.ModelBuilders
                 entity =>
                 {
                     entity.HasIndex(x => x.Email).IsUnique();
+
+                    entity
+                        .HasOne(x => x.Role)
+                        .WithMany(r => r.Users)
+                        .HasForeignKey(x => x.RoleId);
                 };
         }
     }

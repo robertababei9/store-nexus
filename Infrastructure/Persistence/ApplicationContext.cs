@@ -13,15 +13,20 @@ namespace Infrastructure.Persistence
 
         }
 
+        #region Entities
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Entities
+            // model builders
+            #region Model Builders
             modelBuilder.Entity<User>(UserModelBuilder.Get());
+            modelBuilder.Entity<Role>(RoleModelBuilder.Get());
+            #endregion
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

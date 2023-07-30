@@ -1,5 +1,6 @@
 ﻿using Application.Repositories.Contracts;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PasswordHashExample.WebAPI.Resources;
 
@@ -25,7 +26,12 @@ namespace Authentication.Services
             //var user = await _context.Users
             //    .FirstOrDefaultAsync(x => x.Username == resource.Username, cancellationToken);
 
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.Email == resource.Email, x => x);
+            var user = await _userRepository.GetAllQueryable()
+                .Include(x => x.Role)
+                .Where(x => x.Email == resource.Email)
+                .FirstOrDefaultAsync();
+
+            //var user = await _userRepository.FirstOrDefaultAsync(x => x.Email == resource.Email, x => x);
 
             if (user == null)
                 throw new Exception("Username or password did not match.");

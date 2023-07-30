@@ -10,13 +10,13 @@ namespace store_nexus.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
 
-        public UserController(
+        public UsersController(
             IUnitOfWork unitOfWork, 
             IUserService userService
         )
@@ -51,9 +51,9 @@ namespace store_nexus.Controllers
 
         // TODO: To be changed to POST method ... how tf to send the password in query ... wtf is wrong with you
         [AllowAnonymous]
-        [HttpGet]
+        [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromQuery] LoginResource loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginResource loginModel)
         {
             try
             {

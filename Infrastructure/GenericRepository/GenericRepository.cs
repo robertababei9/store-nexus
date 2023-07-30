@@ -48,6 +48,11 @@ namespace Infrastructure.GenericRepository
             await context.SaveChangesAsync();
         }
 
+        public virtual IQueryable<T> GetAllQueryable()
+        {
+            return dbSet.AsQueryable();
+        }
+
         public virtual async Task<TResult> FirstOrDefaultAsync<TResult>(Expression<Func<T, bool>> filterExpr, Expression<Func<T, TResult>> selectExpr)
         {
             return await dbSet

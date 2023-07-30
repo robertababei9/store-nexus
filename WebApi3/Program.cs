@@ -63,6 +63,12 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddAuthorization();
 
+// CORS
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
 
 var app = builder.Build();
 
@@ -74,6 +80,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("corsapp");
 
 app.UseAuthentication();
 app.UseAuthorization();
