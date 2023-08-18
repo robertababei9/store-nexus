@@ -15,16 +15,18 @@ namespace Infrastructure.UnitOfWork
         private readonly ApplicationContext _context;
         //private readonly ILogger _logger;
 
-        public IUserRepository User { get; private set; }
 
         public UnitOfWork(ApplicationContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
             //_logger = loggerFactory.CreateLogger("logs");
 
-            User = new UserRepository(_context);
         }
-
+        
+        public ApplicationContext GetContext()
+        {
+            return _context;
+        }
 
         public void Dispose()
         {

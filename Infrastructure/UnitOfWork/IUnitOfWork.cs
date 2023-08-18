@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Contracts;
+using Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,8 @@ namespace Infrastructure.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        // repositories
-        IUserRepository User { get; }
 
-
+        ApplicationContext GetContext();
         void Dispose();
     }
 }

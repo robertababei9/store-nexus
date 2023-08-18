@@ -3,10 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Common
 {
-    public class BaseEntity
+    public class BaseEntity<TKey> : IBaseEntity<TKey>, IAuditableEntity
+        where TKey : struct
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public virtual TKey Id { get; set; }
+
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
     }
 }

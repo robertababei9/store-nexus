@@ -9,16 +9,25 @@ namespace Infrastructure.GenericRepository
 {
     public interface IGenericRepository<T>  where T : class
     {
+
+        Task<T> AddAsync(T entity);
+        void Update(T entity);
+
+
+        IQueryable<T> GetAllQueryable();
+
+
+
+
+
         Task<IEnumerable<T>> All();
         Task<T> GetById(Guid id);
-        Task<bool> AddAsync(T entity);
         Task<bool> Delete(Guid id);
         Task<bool> Upsert(T entity);
 
         Task SaveChangesAsync();
 
 
-        IQueryable<T> GetAllQueryable();
         Task<TResult> FirstOrDefaultAsync<TResult>(Expression<Func<T, bool>> filterExpr, Expression<Func<T, TResult>> selectExpr);
     }
 }

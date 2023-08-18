@@ -51,13 +51,7 @@ namespace Authentication.Services
 
         public async Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken)
         {
-            var user = new User
-            {
-                Name = resource.Name,
-                Email = resource.Email,
-                PasswordSalt = PasswordHasher.GenerateSalt()
-            };
-            user.PasswordHash = PasswordHasher.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);
+            var user = GetRegisteredUserModel(resource);
 
             try
             {
@@ -71,6 +65,20 @@ namespace Authentication.Services
 
 
             return new UserResource(user.Id, user.Email);
+        }
+
+        public User GetRegisteredUserModel(RegisterResource resource)
+        {
+            var user = new User
+            {
+                Name = resource.Name,
+                Email = resource.Email,
+                PasswordSalt = PasswordHasher.GenerateSalt()
+            };
+
+            user.PasswordHash = PasswordHasher.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);
+
+            return user;
         }
     }
 }

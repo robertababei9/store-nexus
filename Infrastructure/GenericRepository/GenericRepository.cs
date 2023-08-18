@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
@@ -6,12 +7,14 @@ namespace Infrastructure.GenericRepository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
+        protected readonly IUnitOfWork Uow;
         protected DbContext context;
         internal DbSet<T> dbSet;
         //protected readonly ILogger _logger;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(IUnitOfWork uow, DbContext context)
         {
+            Uow = uow;
             this.context = context;
             this.dbSet = context.Set<T>();
             //_logger = logger;
@@ -19,13 +22,18 @@ namespace Infrastructure.GenericRepository
 
         public async Task<IEnumerable<T>> All()
         {
+
             return await dbSet.ToListAsync();
         }
 
-        public async Task<bool> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            await dbSet.AddAsync(entity);
-            return true;
+            await Uow.GetContext().Set<T>().AddAsync(entity);
+            return entity;
+        }
+        public virtual void Update(T entity)
+        {
+            Uow.GetContext().Set<T>().Update(entity);
         }
 
         public Task<bool> Delete(Guid id)
@@ -50,7 +58,7 @@ namespace Infrastructure.GenericRepository
 
         public virtual IQueryable<T> GetAllQueryable()
         {
-            return dbSet.AsQueryable();
+            return Uow.GetContext().Set<T>().AsQueryable<T>();
         }
 
         public virtual async Task<TResult> FirstOrDefaultAsync<TResult>(Expression<Func<T, bool>> filterExpr, Expression<Func<T, TResult>> selectExpr)
@@ -60,5 +68,6 @@ namespace Infrastructure.GenericRepository
                         .Select(selectExpr)
                         .FirstOrDefaultAsync();
         }
+
     }
 }

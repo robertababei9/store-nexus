@@ -1,6 +1,10 @@
-﻿using Authentication.Services;
+﻿using Application.Commands.Users;
+using Application.Queries.Users;
+using Authentication.Services;
+using Domain.Dto;
 using Domain.Entities;
 using Infrastructure.UnitOfWork;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PasswordHashExample.WebAPI.Resources;
@@ -12,44 +16,55 @@ namespace store_nexus.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<UsersController> _logger;
+        private readonly IMediator _mediator;
         private readonly IUserService _userService;
 
         public UsersController(
-            IUnitOfWork unitOfWork, 
+            ILogger<UsersController> logger,
+            IMediator mediator,
             IUserService userService
         )
         {
-            _unitOfWork = unitOfWork;
+            _logger = logger;
+            _mediator = mediator;
             _userService = userService;
         }
 
-
-        [HttpGet]
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
-            var users = await _unitOfWork.User.All();
+            var response = await _mediator.Send(new GetAllUsers.Query());
 
-            return Ok(users);
+            return Ok(response.data);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddUser()
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Add([FromBody] UsersDto user)
         {
-            var userToAdd = new User
-            {
-                Name = "Robert Ababei",
-                Email = "robert.ababei9@gmail.com"
-            };
+            var response = await _mediator.Send(new AddUser.Command(user));
 
-            await _unitOfWork.User.AddAsync(userToAdd);
-            await _unitOfWork.User.SaveChangesAsync();
-
-            return Ok(userToAdd);
+            return Ok(response);
         }
 
-        // TODO: To be changed to POST method ... how tf to send the password in query ... wtf is wrong with you
+        [HttpPut("[action]")]
+        public async Task<IActionResult> Edit([FromBody] UsersDto user)
+        {
+            var response = await _mediator.Send(new EditUser.Command(user));
+
+            if (response)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(new { message = "Failed to update user" });
+            }
+
+        }
+
+
+
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
