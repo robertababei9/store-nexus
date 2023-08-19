@@ -80,7 +80,12 @@ namespace store_nexus.Controllers
             {
                 var token = await _userService.Login(loginModel, CancellationToken.None);
 
-                return Ok(token);
+                var result = new
+                {
+                    token = token
+                };
+
+                return Ok(result);
             }
             catch (Exception e)
             {
