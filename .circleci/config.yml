@@ -1,0 +1,23 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@2.1.2
+jobs:
+  build-docker-image:
+      executor:
+        name: docker/docker
+        tag: "3.6"
+      steps:
+        - checkout
+        - docker/install-docker-tools
+        - setup_remote_docker:
+            docker_layer_caching: true
+        - run:
+            name: Build and push Docker image
+            command: |
+              docker build -t storenexusapi.azurecr.io/store-nexus:latest .
+              docker login -u $DOCKER_USER -p $DOCKER_PASS storenexusapi.azurecr.io
+              docker push storenexusapi.azurecr.io/store-nexus:latest
+workflows:
+  build-and-deploy:
+    jobs:
+      - build-docker-image
