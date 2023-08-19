@@ -20,29 +20,23 @@ namespace store_nexus.Controllers
         private readonly IMediator _mediator;
         private readonly IUserService _userService;
 
-        private readonly IConfiguration _configuration;
-
         public UsersController(
             ILogger<UsersController> logger,
             IMediator mediator,
-            IUserService userService,
-            IConfiguration configuration
+            IUserService userService
         )
         {
             _logger = logger;
             _mediator = mediator;
             _userService = userService;
-            _configuration = configuration;
         }
 
-        [AllowAnonymous]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
             var response = await _mediator.Send(new GetAllUsers.Query());
-            var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            return Ok(connectionString);
+            return Ok(response.data);
         }
 
         [HttpPost("[action]")]
@@ -80,12 +74,7 @@ namespace store_nexus.Controllers
             {
                 var token = await _userService.Login(loginModel, CancellationToken.None);
 
-                var result = new
-                {
-                    token = token
-                };
-
-                return Ok(result);
+                return Ok(token);
             }
             catch (Exception e)
             {
