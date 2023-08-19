@@ -20,23 +20,28 @@ namespace store_nexus.Controllers
         private readonly IMediator _mediator;
         private readonly IUserService _userService;
 
+        private readonly IConfiguration _configuration;
+
         public UsersController(
             ILogger<UsersController> logger,
             IMediator mediator,
-            IUserService userService
+            IUserService userService,
+            IConfiguration configuration
         )
         {
             _logger = logger;
             _mediator = mediator;
             _userService = userService;
+            _configuration = configuration;
         }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
             var response = await _mediator.Send(new GetAllUsers.Query());
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            return Ok(response.data);
+            return Ok(connectionString);
         }
 
         [HttpPost("[action]")]
