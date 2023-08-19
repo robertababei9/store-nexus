@@ -35,6 +35,7 @@ namespace store_nexus.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
