@@ -6,6 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ENV ASPNETCORE_ENVIRONMENT=Development
 WORKDIR /src
 COPY ["Domain", "Domain/"]
+COPY ["Common", "Common/"]
 COPY ["Infrastructure", "Infrastructure/"]
 COPY ["Authentication", "Authentication/"]
 COPY ["Application", "Application/"]
