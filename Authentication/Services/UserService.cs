@@ -1,4 +1,4 @@
-﻿using Application.Repositories.Contracts;
+﻿using Infrastructure.Repositories.Contracts;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

@@ -1,11 +1,12 @@
 ﻿using Infrastructure.Repositories.Contracts;
 using Domain.Dto;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Queries.Users
+namespace Application.Queries.Invoices
 {
-    public static class GetAllUsers
+    public static class GetAllInvoices
     {
         // Query
         public record Query() : IRequest<Response>;
@@ -14,18 +15,19 @@ namespace Application.Queries.Users
         // Handler
         public class Handler : IRequestHandler<Query, Response>
         {
-            protected IUserRepository _userRepository { get; set; }
-            public Handler(IUserRepository userRepository)
+            protected IInvoiceRepository _invoiceRepository { get; set; }
+            public Handler(IInvoiceRepository invoiceRepository)
             {
-                _userRepository = userRepository;
+                _invoiceRepository =  invoiceRepository;
             }
 
             public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
             {
-                var result = _userRepository
-                    .GetAllQueryable().Include(x => x.Role)
+                var result = _invoiceRepository
+                    .GetAllQueryable()
+                        .Include(x => x.InvoiceItems)
                     .ToList()
-                    .Select(x => new UsersDto(x))
+                    .Select(x => x)
                     .ToList();
 
                 return new Response(result);
@@ -35,6 +37,7 @@ namespace Application.Queries.Users
 
 
         // Response
-        public record Response(IEnumerable<UsersDto> data);
+        public record Response(IEnumerable<Invoice> data);
     }
 }
+

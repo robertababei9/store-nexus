@@ -8,14 +8,17 @@ namespace Infrastructure.Persistence
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
 
         }
 
         #region Entities
+        public DbSet<Company> Company{ get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<InvoiceItem> InvoiceItem { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,8 +27,11 @@ namespace Infrastructure.Persistence
 
             // model builders
             #region Model Builders
+            modelBuilder.Entity<Company>(CompanyModelBuilder.Get());
             modelBuilder.Entity<User>(UserModelBuilder.Get());
             modelBuilder.Entity<Role>(RoleModelBuilder.Get());
+            modelBuilder.Entity<Invoice>(InvoiceModelBuilder.Get());
+            modelBuilder.Entity<InvoiceItem>(InvoiceItemModelBuilder.Get());
             #endregion
         }
 

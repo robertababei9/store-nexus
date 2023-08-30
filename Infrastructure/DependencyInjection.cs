@@ -1,5 +1,7 @@
-﻿using Application.Repositories;
-using Application.Repositories.Contracts;
+﻿using Infrastructure.Repositories;
+using Infrastructure.Repositories.Contracts;
+using Infrastructure.Repositories;
+using Infrastructure.Repositories.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -13,6 +15,8 @@ namespace Infrastructure
         {
 
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+            services.AddTransient<IInvoiceItemRepository, InvoiceItemRepository>();
 
             return services;
         }

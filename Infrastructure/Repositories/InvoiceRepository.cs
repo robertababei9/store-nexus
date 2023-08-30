@@ -3,19 +3,16 @@ using Infrastructure.GenericRepository;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories.Contracts;
 using Infrastructure.UnitOfWork;
-using Microsoft.Extensions.Logging;
+
 
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepository : GenericRepository<User>, IUserRepository
+    public class InvoiceRepository : GenericRepository<Invoice>, IInvoiceRepository
     {
-
-        public UserRepository(IUnitOfWork uow, ApplicationContext context) : base(uow, context)
+        public InvoiceRepository(IUnitOfWork uow, ApplicationContext context) : base(uow, context)
         {
 
         }
-
-
     }
 }

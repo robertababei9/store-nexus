@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\Applicati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{348DFAB9-6197-409B-84F7-F9E276D3DFFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "..\WebApi3\WebApi.csproj", "{C283718B-C9B0-4E82-A5D4-FC9ECB1B95C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi.csproj", "{C283718B-C9B0-4E82-A5D4-FC9ECB1B95C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "..\Authentication\Authentication.csproj", "{03A73BC0-7A0B-49DA-9B4D-9B9A8E06964F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "..\Authentication\Authentication.csproj", "{03A73BC0-7A0B-49DA-9B4D-9B9A8E06964F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{99C1FBA2-02E3-41EB-AE8B-5DBD30FF14D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{03A73BC0-7A0B-49DA-9B4D-9B9A8E06964F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03A73BC0-7A0B-49DA-9B4D-9B9A8E06964F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03A73BC0-7A0B-49DA-9B4D-9B9A8E06964F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99C1FBA2-02E3-41EB-AE8B-5DBD30FF14D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99C1FBA2-02E3-41EB-AE8B-5DBD30FF14D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99C1FBA2-02E3-41EB-AE8B-5DBD30FF14D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99C1FBA2-02E3-41EB-AE8B-5DBD30FF14D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

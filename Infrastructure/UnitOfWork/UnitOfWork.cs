@@ -1,7 +1,4 @@
-﻿using Application.Repositories;
-using Application.Repositories.Contracts;
-using Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 
 

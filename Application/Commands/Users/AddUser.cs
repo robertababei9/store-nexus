@@ -1,4 +1,4 @@
-﻿using Application.Repositories.Contracts;
+﻿using Infrastructure.Repositories.Contracts;
 using Authentication.Services;
 using Domain.Dto;
 using Domain.Entities;

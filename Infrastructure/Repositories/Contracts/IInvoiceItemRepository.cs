@@ -3,8 +3,7 @@ using Infrastructure.GenericRepository;
 
 namespace Infrastructure.Repositories.Contracts
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IInvoiceItemRepository : IGenericRepository<InvoiceItem>
     {
-        
     }
 }
