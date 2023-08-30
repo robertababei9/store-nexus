@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class InvoicesController : ControllerBase
     {
         private readonly ILogger<InvoicesController> _logger;
