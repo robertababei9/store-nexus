@@ -13,7 +13,7 @@ namespace Common.Helpers
             invoiceNumber.Append("#");
 
             // Add year, month, and day to the invoice number
-            invoiceNumber.Append(currentDate.Year.ToString("D2")); // 2-digit year
+            invoiceNumber.Append(currentDate.ToString("yy")); // 2-digit year
             invoiceNumber.Append(currentDate.Month.ToString("D2")); // 2-digit month
             invoiceNumber.Append(currentDate.Day.ToString("D2"));   // 2-digit day
 
