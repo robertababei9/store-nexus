@@ -8,6 +8,7 @@ namespace Domain.Dto
 {
     public class InvoiceDto
     {
+        public Guid Id { get; set; }
         public string InvoiceNo { get; set; }
         public string BillFrom { get; set; }
         public string BillTo { get; set; }

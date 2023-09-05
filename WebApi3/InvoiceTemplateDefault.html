@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Invoice</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Inter;
+            }
+            p {
+                margin: 0;
+                color: rgb(107, 114, 128);
+            }
+            .container {
+                width: 100%;
+
+                background-color: white;
+                padding: 50px 0px;
+            }
+            .row-bill-info-container {
+                display: flex;
+            }
+            .bill-info-left-1 {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+            }
+            .bill-info-left-container {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .bill-from-logo-container {
+                width: 30%;
+                text-align: center;
+            }
+            .bill-from-container {
+                width: 70%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: start;
+                border-left: 1px solid rgb(75 78 84 / 15%);
+                padding-left: 24px;
+                margin-left: 12px;
+            }
+            .bill-from-from-text {
+                font-weight: 600;
+                margin-bottom: 4px;
+                color: black;
+            }
+            .bill-from-address-text {
+                margin-bottom: 4px;
+            }
+            .bill-info-right-container {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .bill-info-right-row {
+                display: flex;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .bill-info-left-text-1 {
+                width: 50%;
+                text-align: right;
+                color: rgb(107, 114, 128);
+                font-weight: 400;
+                font-size: 1.6rem;
+            }
+            .bill-to-text {
+                color: rgb(107, 114, 128);
+                font-weight: 600;
+                font-size: 24px;
+                text-align: center;
+            }
+            .bill-info-right-text-1 {
+                width: 50%;
+                padding-left: 20px;
+                text-align: left;
+                font-size: 1.4rem;
+                color: black;
+            }
+            .bill-info-left-text-2 {
+                width: 50%;
+                text-align: right;
+                color: rgb(107, 114, 128);
+                font-weight: 400;
+                font-size: 0.8rem;
+            }
+            .bill-info-right-text-2 {
+                width: 50%;
+                padding-left: 20px;
+                text-align: left;
+                font-size: 0.9rem;
+                color: black;
+            }
+
+            /*** ITEMS ***/
+            .items-header-container {
+                width: 100%;
+                display: flex;
+                margin-top: 60px;
+                padding-bottom: 12px;
+            }
+            .items-header-text {
+                color: rgb(107, 114, 128);
+                font-weight: 600;
+            }
+            .items-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            /*** Pricing ***/
+            .pricing-container {
+                margin-top: 42px;
+            }
+            .pricing-row {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding-bottom: 14px;
+                margin-bottom: 14px;
+            }
+            .pricing-row-border-b {
+                border-bottom: 1px solid rgb(75 78 84 / 15%);
+            }
+
+            /*** Footer ***/
+            .footer-container {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                margin-top: 42px;
+            }
+            .notes {
+                font-size: 12px;
+                padding-left: 24px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row-bill-info-container">
+                <div class="bill-info-left-container">
+                    <div style="margin-bottom: 24px" class="bill-info-left-1">
+                        <div class="bill-from-logo-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="70" height="70" viewBox="0 0 40.343 42">
+                                <g data-name="Ð¡Ð»Ð¾Ð¹ 2"><path fill="#2684ff" d="M20.172,27.858,13.314,21l6.858-6.858V0L.586,19.586a2,2,0,0,0,0,2.828L20.172,42s3-2,3-7A11.639,11.639,0,0,0,20.172,27.858Z"></path><path fill="#1d78f2" d="M14.385,19.667l.131.131,5.656-5.656V0L9.571,10.6A20.2,20.2,0,0,0,14.385,19.667Z"></path><path fill="#126ae5" d="M15.832,18.285l.1.1,4.242-4.242V0L11.306,8.866A18.21,18.21,0,0,0,15.832,18.285Z"></path><path fill="#0b60da" d="M20.172,14.142V0l-7,7a15.546,15.546,0,0,0,4.171,9.97Z"></path><path fill="#0154ce" d="M15.172,7c0,4.746,3.407,8.371,3.585,8.556l1.415-1.414V0L15.35,4.822A13.161,13.161,0,0,0,15.172,7Z"></path><path fill="#2482fd" d="M20.172,14.142,27.029,21l-6.857,6.858V42L39.757,22.414a2,2,0,0,0,0-2.828L20.172,0s-3,2-3,7A11.639,11.639,0,0,0,20.172,14.142Z"></path><path fill="#1d78f2" d="M25.958,22.333l-.131-.131-5.655,5.656V42l10.6-10.6A20.2,20.2,0,0,0,25.958,22.333Z"></path><path fill="#126ae5" d="M24.511,23.715l-.1-.1-4.241,4.242V42l8.866-8.866A18.216,18.216,0,0,0,24.511,23.715Z"></path><path fill="#0b60da" d="M20.172,27.858V42l7-7A15.545,15.545,0,0,0,23,25.03Z"></path><path fill="#0154ce" d="M25.172,35c0-4.746-3.407-8.371-3.586-8.556l-1.414,1.414V42l4.822-4.822A13.27,13.27,0,0,0,25.172,35Z"></path><path fill="#2684ff" d="M20.172,27.858,13.314,21H2.172v3l18,18s3-2,3-7A11.639,11.639,0,0,0,20.172,27.858Z"></path></g>
+                            </svg>
+                        </div>
+                        <div class="bill-from-container">
+                            <p class="bill-from-from-text">{{BillFrom.From}}</p>
+                            <p style="max-width: 190px;" class="bill-from-address-text">{{BillFrom.Address}}</p>
+                            <p class="bill-from-address-text">{{BillFrom.Email}}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bill-info-left-1">
+                        <div class="bill-from-logo-container">
+                            <p class="bill-to-text">Bill to</p>
+                        </div>
+                        <div class="bill-from-container">
+                            <p class="bill-from-from-text">{{BillTo.To}}</p>
+                            <p style="max-width: 190px;" class="bill-from-address-text">{{BillTo.Address}}</p>
+                            <p class="bill-from-address-text">{{BillTo.Email}}</p>
+                        </div>
+                    </div>
+                                        
+                </div>
+                <div class="bill-info-right-container">
+                    <div style="margin-bottom: 16px;" class="bill-info-right-row">
+                        <p class="bill-info-left-text-1">INVOICE</p>
+                        <p class="bill-info-right-text-1">{{InvoiceNo}}</p>
+                    </div>
+                    <div class="bill-info-right-row">
+                        <p class="bill-info-left-text-2">INVOICE DATE</p>
+                        <p class="bill-info-right-text-2">{{InvoiceDate}}</p>
+                    </div>
+                    <div class="bill-info-right-row">
+                        <p class="bill-info-left-text-2">DUE DATE</p>
+                        <p class="bill-info-right-text-2">{{DueDate}}</p>
+                    </div>
+                    <div class="bill-info-right-row">
+                        <p class="bill-info-left-text-2">TOTAL</p>
+                        <p class="bill-info-right-text-2">{{Total}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="items-header-container">
+                <p style="width: 60%" class="items-header-text">ITEM</p>
+                <p style="width: 10%" class="items-header-text">QTY</p>
+                <p style="width: 15%" class="items-header-text">PRICE</p>
+                <p style="width: 15%; text-align: right;" class="items-header-text">TOTAL</p>
+            </div>
+
+            <div class="items-container">
+
+
+
+                {{ITEMS}}
+
+
+
+            </div>
+
+            <div class="pricing-container">
+                <div class="pricing-row pricing-row-border-b">
+                    <p style="text-align:left; font-weight: 600; font-size: 14px;">SUBTOTAL</p>
+                    <p style="text-align:right; color: black; font-size: 14px;">{{Subtotal}}</p>
+                </div>
+
+                <div class="pricing-row pricing-row-border-b">
+                    <p style="text-align:left; font-weight: 600; font-size: 14px;">TAX</p>
+                    <p style="text-align:right; color: black; font-size: 14px;">{{Tax}}</p>
+                </div>
+
+                <div class="pricing-row pricing-row-border-b">
+                    <p style="text-align:left; font-weight: 600; font-size: 14px;">DISCOUNT</p>
+                    <p style="text-align:right; color: black; font-size: 14px;">{{Discount}}</p>
+                </div>
+
+                <div class="pricing-row">
+                    <p style="text-align:left; font-weight: 600; font-size: 20px;">TOTAL</p>
+                    <p style="text-align:right; color: black; font-size: 20px; font-weight: 600;">{{Total}}</p>
+                </div>
+            </div>
+
+            <div class="footer-container">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="45" height="45" viewBox="0 0 40.343 42">
+                        <g data-name="Ð¡Ð»Ð¾Ð¹ 2"><path fill="#2684ff" d="M20.172,27.858,13.314,21l6.858-6.858V0L.586,19.586a2,2,0,0,0,0,2.828L20.172,42s3-2,3-7A11.639,11.639,0,0,0,20.172,27.858Z"></path><path fill="#1d78f2" d="M14.385,19.667l.131.131,5.656-5.656V0L9.571,10.6A20.2,20.2,0,0,0,14.385,19.667Z"></path><path fill="#126ae5" d="M15.832,18.285l.1.1,4.242-4.242V0L11.306,8.866A18.21,18.21,0,0,0,15.832,18.285Z"></path><path fill="#0b60da" d="M20.172,14.142V0l-7,7a15.546,15.546,0,0,0,4.171,9.97Z"></path><path fill="#0154ce" d="M15.172,7c0,4.746,3.407,8.371,3.585,8.556l1.415-1.414V0L15.35,4.822A13.161,13.161,0,0,0,15.172,7Z"></path><path fill="#2482fd" d="M20.172,14.142,27.029,21l-6.857,6.858V42L39.757,22.414a2,2,0,0,0,0-2.828L20.172,0s-3,2-3,7A11.639,11.639,0,0,0,20.172,14.142Z"></path><path fill="#1d78f2" d="M25.958,22.333l-.131-.131-5.655,5.656V42l10.6-10.6A20.2,20.2,0,0,0,25.958,22.333Z"></path><path fill="#126ae5" d="M24.511,23.715l-.1-.1-4.241,4.242V42l8.866-8.866A18.216,18.216,0,0,0,24.511,23.715Z"></path><path fill="#0b60da" d="M20.172,27.858V42l7-7A15.545,15.545,0,0,0,23,25.03Z"></path><path fill="#0154ce" d="M25.172,35c0-4.746-3.407-8.371-3.586-8.556l-1.414,1.414V42l4.822-4.822A13.27,13.27,0,0,0,25.172,35Z"></path><path fill="#2684ff" d="M20.172,27.858,13.314,21H2.172v3l18,18s3-2,3-7A11.639,11.639,0,0,0,20.172,27.858Z"></path></g>
+                    </svg>
+                </div>
+
+                <p class="notes">
+                    {{Notes}}        
+                </p>
+            </div>
+
+        </div>
+
+
+    </body>
+</html>

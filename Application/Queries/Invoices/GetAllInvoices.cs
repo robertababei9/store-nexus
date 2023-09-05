@@ -29,6 +29,7 @@ namespace Application.Queries.Invoices
                     .ToList()
                     .Select(x => new InvoiceDto
                     {
+                        Id = x.Id,
                         InvoiceNo = x.InvoiceNo,
                         BillFrom = x.BillFrom,
                         BillTo = x.BillTo,

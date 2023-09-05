@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,15 +15,19 @@ namespace Domain.Dto
             Items = new List<ItemType>();
         }
 
+
+        public string CreatedDate { get; set; }
         public string DueDate { get; set; }
         public string InvoiceNo { get; set; }
         public BillTo BillTo { get; set; }
         public BillFrom BillFrom { get; set; }
         public IEnumerable<ItemType> Items{ get; set; }
         public string Notes{ get; set; }
-        public int Subtotal { get; set; }
         public int Tax { get; set; }
         public int Discount { get; set; }
+        public decimal TaxSubtotal { get; set; }
+        public decimal DiscountSubtotal { get; set; }
+        public int Subtotal { get; set; }
         public int Total { get; set; }
     }
 
@@ -48,4 +53,5 @@ namespace Domain.Dto
         public int Qty { get; set; }
         public int Price { get; set; }
     }
+
 }

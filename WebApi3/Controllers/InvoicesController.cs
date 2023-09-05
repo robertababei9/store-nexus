@@ -1,5 +1,6 @@
 ﻿using Application.Commands.Invoices;
 using Application.Queries.Invoices;
+using Common.Helpers;
 using Domain.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,32 @@ namespace WebApi.Controllers
         {
             _logger = logger;
             _mediator = mediator;
+        }
+
+
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAll(Guid id)
+        {
+            var response = await _mediator.Send(new GetById.Query(id));
+
+            if (response.invoiceData != null)
+            {
+                return Ok(response.invoiceData);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetPdf(Guid id)
+        {
+            var response = await _mediator.Send(new GetPdf.Query(id));
+
+            var resultPdf = File(response.pdfBytes, "application/pdf", "pdf_test.pdf");
+
+            return Ok(resultPdf);
         }
 
         [HttpGet("[action]")]
