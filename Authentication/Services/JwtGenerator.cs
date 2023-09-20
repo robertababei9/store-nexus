@@ -22,7 +22,7 @@ namespace Authentication.Services
                     new Claim("Id", user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Sub, user.Name),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("role", user.Role.Name ?? "")
+                    new Claim("Role", user.Role.Name ?? "")
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)

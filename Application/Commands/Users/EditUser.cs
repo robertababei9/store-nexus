@@ -35,7 +35,7 @@ namespace Application.Commands.Users
                     if (!string.IsNullOrEmpty(request.userToEdit.Password))
                     {
                         var userRegisterModel = _userService.GetRegisteredUserModel(new RegisterResource(
-                            request.userToEdit.Name,
+                            request.userToEdit.FullName,
                             request.userToEdit.Email,
                             request.userToEdit.Password));
 

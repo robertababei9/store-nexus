@@ -13,7 +13,7 @@ namespace Domain.Dto
         public string Contact { get; set; }
         public string DateOfBirth { get; set; }
         public Guid RoleId { get; set; }
-        public Guid AssignedStore { get; set; }
+        public Guid StoreId { get; set; }
 
 
         public User ToEntity()

@@ -46,6 +46,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IUserService, UserService>();
 
 
+// Transient , Scoped, Singleton
 builder.Services
     .AddApplication()
     .AddInfrastructure();

@@ -39,6 +39,14 @@ namespace store_nexus.Controllers
             return Ok(response.data);
         }
 
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var response = await _mediator.Send(new GetById.Query(id));
+
+            return Ok(response.userData);
+        }
+
         [HttpPost("[action]")]
         public async Task<IActionResult> Add([FromBody] UsersDto user)
         {
@@ -72,9 +80,9 @@ namespace store_nexus.Controllers
         {
             try
             {
-                var token = await _userService.Login(loginModel, CancellationToken.None);
+                var loginResult = await _userService.Login(loginModel, CancellationToken.None);
 
-                return Ok(token);
+                return Ok(loginResult);
             }
             catch (Exception e)
             {

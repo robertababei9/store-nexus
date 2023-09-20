@@ -1,15 +1,15 @@
 ﻿using Infrastructure.Repositories.Contracts;
 using Domain.Dto;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.Users
 {
-    public static class GetAllUsers
+    public static class GetById
     {
         // Query
-        public record Query() : IRequest<Response>;
-
+        public record Query(Guid id) : IRequest<Response>;
 
         // Handler
         public class Handler : IRequestHandler<Query, Response>
@@ -22,8 +22,9 @@ namespace Application.Queries.Users
 
             public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
             {
-                var results = _userRepository
+                var userData = await _userRepository
                     .GetAllQueryable()
+                    .Where(x => x.Id == request.id)
                         .Include(x => x.Role)
                     .Select(x => new UsersDto
                     {
@@ -36,16 +37,15 @@ namespace Application.Queries.Users
                         Store = "x.Store.Name",
                         StoreId = Guid.NewGuid(),   // "x.Store.Id"
                         PhoneNumber = "x.PhoneNumber",
+                        
+                    })
+                    .FirstOrDefaultAsync();
 
-                    });
-
-                return new Response(results);
+                return new Response(userData);
             }
         }
 
-
-
         // Response
-        public record Response(IEnumerable<UsersDto> data);
+        public record Response(UsersDto userData);
     }
 }

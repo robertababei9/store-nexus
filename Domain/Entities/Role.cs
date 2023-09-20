@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
-    public class Role : BaseEntity<Guid>, IAuditableEntity
+    public class Role : BaseEntity<Guid>
     {
         public string Name { get; set; }
         public string Description { get; set; }

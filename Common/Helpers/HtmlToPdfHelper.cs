@@ -1,10 +1,7 @@
 ﻿//using IronPdf;
 
 using Domain.Dto;
-using PdfSharpCore;
-using PdfSharpCore.Pdf;
 using System.Globalization;
-using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace Common.Helpers
 {
@@ -62,11 +59,6 @@ namespace Common.Helpers
             var renderer = new ChromePdfRenderer();
             var pdf = renderer.RenderHtmlAsPdf(htmlContent);
 
-
-            //pdf.ReplaceTextOnAllPages("{{InvoiceNo}}", "#030932-55");
-            //pdf.ReplaceTextOnAllPages("{{InvoiceDate}}", "03-Sep-2023");
-            //pdf.ReplaceTextOnAllPages("{{DueDate}}", "31-Dec-2023");
-            //pdf.ReplaceTextOnAllPages("{{Total}}", "$ 5.600");
 
             var pdfResult = pdf.SaveAs("test.pdf");
 

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,11 @@ namespace Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             var assembly = typeof(DependencyInjection).Assembly;
+            
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            
             services.AddMediatR(configuration => 
                 configuration.RegisterServicesFromAssemblies(assembly));
 

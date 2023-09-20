@@ -3,7 +3,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PasswordHashExample.WebAPI.Resources;
-
+using Domain.Common;
 
 namespace Authentication.Services
 {
@@ -21,13 +21,14 @@ namespace Authentication.Services
             _pepper = Environment.GetEnvironmentVariable("PasswordHashExamplePepper");
         }
 
-        public async Task<string> Login(LoginResource resource, CancellationToken cancellationToken)
+        public async Task<LoginResponseResource> Login(LoginResource resource, CancellationToken cancellationToken)
         {
             //var user = await _context.Users
             //    .FirstOrDefaultAsync(x => x.Username == resource.Username, cancellationToken);
 
             var user = await _userRepository.GetAllQueryable()
-                .Include(x => x.Role)
+                    .Include(x => x.Role)
+                    .Include(x => x.Company)
                 .Where(x => x.Email == resource.Email)
                 .FirstOrDefaultAsync();
 
@@ -44,7 +45,13 @@ namespace Authentication.Services
             string secretKey = _appSettings.Value.Secret;
             string token = new JwtGenerator().GetToken(secretKey, user);
 
-            return token;
+            bool needsToCreateCompany = 
+                user.CompanyId == null && 
+                user.Role.Name.ToUpper() == Enums.Roles.Admin.ToString().ToUpper();
+
+            LoginResponseResource result = new LoginResponseResource(token, needsToCreateCompany);
+
+            return result;
 
 
         }

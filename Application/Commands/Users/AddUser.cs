@@ -25,16 +25,20 @@ namespace Application.Commands.Users
 
             public async Task<Guid> Handle(Command request, CancellationToken cancellationToken)
             {
-                User user;
+                User user = new User
+                {
+                    Email = request.userToAdd.Email,
+                    Name = request.userToAdd.FullName,
+                    RoleId = request.userToAdd.RoleId,
+                };
 
-                user = request.userToAdd.ToEntity();
 
                 var userWithPasswordModel = _userService.GetRegisteredUserModel(
                     new RegisterResource(
-                        request.userToAdd.Name,
+                        request.userToAdd.FullName,
                         request.userToAdd.Email,
                         request.userToAdd.Password)
-                    );
+                );
                 user.PasswordSalt = userWithPasswordModel.PasswordSalt;
                 user.PasswordHash = userWithPasswordModel.PasswordHash;
 

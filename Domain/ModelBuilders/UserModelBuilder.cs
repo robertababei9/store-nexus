@@ -16,6 +16,12 @@ namespace Domain.ModelBuilders
                         .HasOne(x => x.Role)
                         .WithMany(r => r.Users)
                         .HasForeignKey(x => x.RoleId);
+
+                    entity
+                        .HasOne(x => x.Company)
+                        .WithMany(r => r.Users)
+                        .HasForeignKey(x => x.CompanyId);
+
                 };
         }
     }
