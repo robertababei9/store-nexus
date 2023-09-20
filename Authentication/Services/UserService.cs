@@ -28,7 +28,6 @@ namespace Authentication.Services
 
             var user = await _userRepository.GetAllQueryable()
                     .Include(x => x.Role)
-                    .Include(x => x.Company)
                 .Where(x => x.Email == resource.Email)
                 .FirstOrDefaultAsync();
 
@@ -39,7 +38,7 @@ namespace Authentication.Services
 
             var passwordHash = PasswordHasher.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);
             if (user.PasswordHash != passwordHash)
-                throw new Exception("Username or password did not match 2.");
+                throw new Exception("Username or password did not match 2. " + user.PasswordHash + " --- " + passwordHash);
 
             // authentication successful so generate jwt token
             string secretKey = _appSettings.Value.Secret;
