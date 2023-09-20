@@ -35,11 +35,11 @@ namespace Authentication.Services
             //var user = await _userRepository.FirstOrDefaultAsync(x => x.Email == resource.Email, x => x);
 
             if (user == null)
-                throw new Exception("Username or password did not match.");
+                throw new Exception("Username or password did not match 1.");
 
             var passwordHash = PasswordHasher.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);
             if (user.PasswordHash != passwordHash)
-                throw new Exception("Username or password did not match.");
+                throw new Exception("Username or password did not match 2.");
 
             // authentication successful so generate jwt token
             string secretKey = _appSettings.Value.Secret;
@@ -80,6 +80,7 @@ namespace Authentication.Services
             {
                 Name = resource.Name,
                 Email = resource.Email,
+                RoleId = resource.RoleId,
                 PasswordSalt = PasswordHasher.GenerateSalt()
             };
 

@@ -37,7 +37,8 @@ namespace Application.Commands.Users
                     new RegisterResource(
                         request.userToAdd.FullName,
                         request.userToAdd.Email,
-                        request.userToAdd.Password)
+                        request.userToAdd.Password,
+                        request.userToAdd.RoleId)
                 );
                 user.PasswordSalt = userWithPasswordModel.PasswordSalt;
                 user.PasswordHash = userWithPasswordModel.PasswordHash;
