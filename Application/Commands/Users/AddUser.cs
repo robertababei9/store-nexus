@@ -77,7 +77,7 @@ namespace Application.Commands.Users
                     UserId = user.Id,
                     FirstName = request.userToAdd.FirstName,
                     LastName = request.userToAdd.LastName,
-                    Contact = request.userToAdd.Contact,
+                    Contact = request.userToAdd.PhoneNumber,
                     Country = request.userToAdd.Country,
                     City = request.userToAdd.City,
                     SignUpDate = DateOnly.FromDateTime(signUpDate),
