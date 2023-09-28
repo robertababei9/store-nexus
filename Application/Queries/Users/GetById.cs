@@ -24,20 +24,23 @@ namespace Application.Queries.Users
             {
                 var userData = await _userRepository
                     .GetAllQueryable()
-                    .Where(x => x.Id == request.id)
                         .Include(x => x.Role)
+                        .Include(x => x.UserDetails)
+                    .Where(x => x.Id == request.id)
                     .Select(x => new UsersDto
                     {
                         Id = x.Id,
-                        FullName = x.Name,
+                        FirstName = x.UserDetails.FirstName,
+                        LastName = x.UserDetails.LastName,
                         Email = x.Email,
                         Role = x.Role.Description,
                         RoleId = x.Role.Id,
-                        Location = "x.Store.Location",
                         Store = "x.Store.Name",
                         StoreId = Guid.NewGuid(),   // "x.Store.Id"
-                        PhoneNumber = "x.PhoneNumber",
-                        
+                        PhoneNumber = x.UserDetails.Contact,
+                        Country = x.UserDetails.Country,
+                        City = x.UserDetails.City,
+                        SignUpDate = x.UserDetails.SignUpDate,
                     })
                     .FirstOrDefaultAsync();
 

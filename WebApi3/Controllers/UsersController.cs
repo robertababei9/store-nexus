@@ -48,11 +48,23 @@ namespace store_nexus.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Add([FromBody] UsersDto user)
+        public async Task<IActionResult> Add([FromBody] UserToAddDto user)
         {
             var response = await _mediator.Send(new AddUser.Command(user));
+            if (response == Guid.Empty)
+            {
+                return BadRequest("Email address is already in use");
+            }
 
             return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetUserRoles()
+        {
+            var response = await _mediator.Send(new GetUserRoles.Query());
+
+            return Ok(response.data);
         }
 
         [HttpPut("[action]")]
@@ -68,7 +80,6 @@ namespace store_nexus.Controllers
             {
                 return BadRequest(new { message = "Failed to update user" });
             }
-
         }
 
 

@@ -15,6 +15,8 @@ namespace Infrastructure
         {
 
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRolesRepository, RolesRepository>();
+            services.AddTransient<IUserDetailsRepository, UserDetailsRepository>();
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
             services.AddTransient<IInvoiceItemRepository, InvoiceItemRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();

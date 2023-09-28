@@ -16,12 +16,13 @@ namespace Domain.Entities
 
         public virtual Role Role { get; set; }
         public virtual Company? Company { get; set; }
+        public virtual UserDetails UserDetails { get; set; }
 
 
         public void FromDto(UsersDto userDto)
         {
             Email = userDto.Email;
-            Name = userDto.FullName;
+            Name = userDto.FirstName + " " + userDto.LastName;
             RoleId = userDto.RoleId;
         }
 

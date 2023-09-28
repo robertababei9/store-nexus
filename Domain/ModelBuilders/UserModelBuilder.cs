@@ -22,6 +22,10 @@ namespace Domain.ModelBuilders
                         .WithMany(r => r.Users)
                         .HasForeignKey(x => x.CompanyId);
 
+                    entity
+                        .HasOne(x => x.UserDetails)
+                        .WithOne(r => r.User);
+
                 };
         }
     }

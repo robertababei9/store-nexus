@@ -6,12 +6,14 @@ namespace Domain.Dto
 {
     public class UserToAddDto
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
         public string Password {get; set;}
-        public string Location { get; set; }
         public string Contact { get; set; }
-        public string DateOfBirth { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string SignUpDate { get; set; }
         public Guid RoleId { get; set; }
         public Guid StoreId { get; set; }
 
@@ -19,7 +21,7 @@ namespace Domain.Dto
         public User ToEntity()
         {
             var user = new User();
-            user.Name = Name;
+            user.Name = FirstName + " " + LastName ;
             user.Email = Email;
             user.RoleId = RoleId;
 

@@ -4,6 +4,7 @@ using Domain.Dto;
 using Domain.Entities;
 using MediatR;
 using PasswordHashExample.WebAPI.Resources;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Commands.Users
 {
@@ -25,17 +26,33 @@ namespace Application.Commands.Users
 
             public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.FirstOrDefaultAsync(x => x.Id == request.userToEdit.Id, x => x);
+                var user = _userRepository
+                    .GetAllQueryable()
+                        .Include(x => x.UserDetails)
+                    .Where(x => x.Id == request.userToEdit.Id)
+                    .FirstOrDefault();
 
                 if (user != null)
                 {
-                    user.FromDto(request.userToEdit);
+                    // It could be encapsulated to something like 'from dto -> to entity'
+                    // but I would like to keep all the logic here in case the request model changes
+
+                    user.Email = request.userToEdit.Email;
+                    user.Name = request.userToEdit.FirstName + " " + request.userToEdit.LastName;
+                    user.RoleId = request.userToEdit.RoleId;
+
+                    user.UserDetails.FirstName = request.userToEdit.FirstName;
+                    user.UserDetails.LastName = request.userToEdit.LastName;
+                    user.UserDetails.Contact = request.userToEdit.PhoneNumber;
+                    user.UserDetails.Country = request.userToEdit.Country;
+                    user.UserDetails.City = request.userToEdit.City;
+                    user.UserDetails.SignUpDate = request.userToEdit.SignUpDate;
 
                     // If the password have a value --> Update password
                     if (!string.IsNullOrEmpty(request.userToEdit.Password))
                     {
                         var userRegisterModel = _userService.GetRegisteredUserModel(new RegisterResource(
-                            request.userToEdit.FullName,
+                            request.userToEdit.FirstName,
                             request.userToEdit.Email,
                             request.userToEdit.Password,
                             request.userToEdit.RoleId));
@@ -44,7 +61,7 @@ namespace Application.Commands.Users
                         user.PasswordHash = userRegisterModel.PasswordHash;
                     }
 
-                    _userRepository.Update(user);
+                    _userRepository.Update(user);   // if the entity it's being tracked -> no need to call .Update
                     await _userRepository.SaveChangesAsync();
 
                     return true;

@@ -20,6 +20,16 @@
         "PasswordHashExamplePepper": "it-taste-pretty-good-to-me"
       }
     },
+    "WebApi3Production": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7268;http://localhost:5268",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "PasswordHashExamplePepper": "it-taste-pretty-good-to-me"
+      }
+    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
