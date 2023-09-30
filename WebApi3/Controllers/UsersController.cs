@@ -2,6 +2,7 @@
 using Application.Queries.Users;
 using Authentication.Services;
 using Domain.Dto;
+using Domain.Dto.Users;
 using Domain.Entities;
 using Infrastructure.UnitOfWork;
 using MediatR;
@@ -80,6 +81,15 @@ namespace store_nexus.Controllers
             {
                 return BadRequest(new { message = "Failed to update user" });
             }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordModel)
+        {
+            var response = await _mediator.Send(new ChangePassword.Command(changePasswordModel));
+            
+            return Ok(response);
+
         }
 
 

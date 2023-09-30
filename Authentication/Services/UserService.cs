@@ -87,5 +87,10 @@ namespace Authentication.Services
 
             return user;
         }
+
+        public string GetExistingPasswordHash(ExistingPasswordResource resource)
+        {
+            return PasswordHasher.ComputeHash(resource.Password, resource.PasswordSalt, _pepper, _iteration);
+        }
     }
 }
