@@ -10,6 +10,7 @@ namespace Common.Models
     {
         public ApiResponseModel()
         {
+            Success = true;
             Errors = new List<string>();
         }
 

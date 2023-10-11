@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231006204810_alter-stores-table")]
+    partial class alterstorestable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,6 +209,14 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationLatLng")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ManagerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -215,9 +226,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("StoreLocationId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StoreStatusId")
                         .HasColumnType("uniqueidentifier");
@@ -234,46 +242,9 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.HasIndex("StoreLocationId")
-                        .IsUnique()
-                        .HasFilter("[StoreLocationId] IS NOT NULL");
-
                     b.HasIndex("StoreStatusId");
 
                     b.ToTable("Store");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StoreLocation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LatLng")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StoreLocation");
                 });
 
             modelBuilder.Entity("Domain.Entities.StoreStatus", b =>
@@ -423,10 +394,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.StoreLocation", "StoreLocation")
-                        .WithOne("Store")
-                        .HasForeignKey("Domain.Entities.Store", "StoreLocationId");
-
                     b.HasOne("Domain.Entities.StoreStatus", "StoreStatus")
                         .WithMany()
                         .HasForeignKey("StoreStatusId")
@@ -434,8 +401,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Manager");
-
-                    b.Navigation("StoreLocation");
 
                     b.Navigation("StoreStatus");
                 });
@@ -481,12 +446,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Role", b =>
                 {
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StoreLocation", b =>
-                {
-                    b.Navigation("Store")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

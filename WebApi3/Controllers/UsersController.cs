@@ -40,6 +40,14 @@ namespace store_nexus.Controllers
             return Ok(response.data);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllManagersOptions()
+        {
+            var result = await _mediator.Send(new GetAllManagers.Query());
+
+            return Ok(result.response);
+        }
+
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

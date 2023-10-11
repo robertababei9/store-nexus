@@ -17,6 +17,7 @@ namespace Domain.Entities
         public virtual Role Role { get; set; }
         public virtual Company? Company { get; set; }
         public virtual UserDetails UserDetails { get; set; }
+        public virtual ICollection<Store> Stores { get; set; } 
 
 
         public void FromDto(UsersDto userDto)

@@ -20,6 +20,9 @@ namespace Infrastructure
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
             services.AddTransient<IInvoiceItemRepository, InvoiceItemRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IStoreRepository, StoreRepository>();
+            services.AddTransient<IStoreLocationRepository, StoreLocationRepository>();
+            services.AddTransient<IStoreStatusRepository, StoreStatusRepository>();
 
             return services;
         }
