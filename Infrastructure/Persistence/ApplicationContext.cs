@@ -23,6 +23,7 @@ namespace Infrastructure.Persistence
         public DbSet<Store> Store { get; set; }
         public DbSet<StoreLocation> StoreLocation { get; set; }
         public DbSet<StoreStatus> StoreStatus { get; set; }
+        public DbSet<StoreDocuments> StoreDocuments { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +40,7 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<InvoiceItem>(InvoiceItemModelBuilder.Get());
             modelBuilder.Entity<Store>(StoreModelBuilder.Get());
             modelBuilder.Entity<StoreStatus>(StoreStatusModelBuilder.Get());
+            modelBuilder.Entity<StoreDocuments>(StoreDocumentsModelBuilder.Get());
             #endregion
         }
 

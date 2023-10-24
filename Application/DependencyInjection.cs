@@ -1,11 +1,8 @@
-﻿using FluentValidation;
+﻿using Application.Services.FileService;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application
 {
@@ -19,6 +16,7 @@ namespace Application
             
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<FileService>();
 
             
             services.AddMediatR(configuration => 

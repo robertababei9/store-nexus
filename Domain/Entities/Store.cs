@@ -22,5 +22,6 @@ namespace Domain.Entities
         public virtual User Manager { get; set; }
         public virtual StoreStatus StoreStatus { get; set; }
         public virtual StoreLocation? StoreLocation { get; set; }
+        public virtual ICollection<StoreDocuments> StoreDocuments { get; set; }
     }
 }

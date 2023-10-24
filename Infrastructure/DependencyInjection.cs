@@ -23,6 +23,7 @@ namespace Infrastructure
             services.AddTransient<IStoreRepository, StoreRepository>();
             services.AddTransient<IStoreLocationRepository, StoreLocationRepository>();
             services.AddTransient<IStoreStatusRepository, StoreStatusRepository>();
+            services.AddTransient<IStoreDocumentsRepository, StoreDocumentsRepository>();
 
             return services;
         }

@@ -1,8 +1,7 @@
-﻿using Application.Commands.Company;
-using Application.Commands.Stores;
+﻿using Application.Commands.Stores;
 using Application.Commands.Users;
 using Application.Queries.Stores;
-using Domain.Dto.CompanyDto;
+using Application.Services.FileService;
 using Domain.Dto.Stores;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -17,16 +16,20 @@ namespace WebApi.Controllers
     {
         private readonly ILogger<InvoicesController> _logger;
         private readonly IMediator _mediator;
+        private readonly FileService _fileService;
 
         public StoresController(
             ILogger<InvoicesController> logger,
-            IMediator mediator
+            IMediator mediator,
+            FileService fileService
         )
         {
             _logger = logger;
             _mediator = mediator;
+            _fileService = fileService;
         }
 
+        #region GETS
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
@@ -51,6 +54,15 @@ namespace WebApi.Controllers
             return Ok(response.response);
         }
 
+        [HttpGet("[action]/{storeId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllFiles(Guid storeId)
+        {
+            var result = await _mediator.Send(new GetAllFiles.Query(storeId));
+
+            return Ok(result.response);
+        }
+
 
         [HttpGet("[action]")]
         public async Task<IActionResult> GetStoreStatuses()
@@ -60,7 +72,9 @@ namespace WebApi.Controllers
             return Ok(result.response);
 
         }
+        #endregion
 
+        #region POSTS
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateStore([FromBody] CreateStoreDto storeToCreate)
         {
@@ -70,6 +84,19 @@ namespace WebApi.Controllers
 
         }
 
+        [HttpPost("[action]/{id}")]
+        public async Task<IActionResult> Upload(IFormFile data, Guid id)
+        {
+            var result = await _mediator.Send(new UploadFile.Command(new UploadFileDto
+            {
+                Blob = data,
+                StoreId = id
+            }));
+            return Ok(result.response);
+        }
+        #endregion
+
+        #region PUTS
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Edit([FromBody] CreateStoreDto storeToEdit)
         {
@@ -77,5 +104,6 @@ namespace WebApi.Controllers
 
             return Ok(result.response);
         }
+        #endregion
     }
 }
