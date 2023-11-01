@@ -36,9 +36,9 @@ namespace Infrastructure.GenericRepository
             Uow.GetContext().Set<T>().Update(entity);
         }
 
-        public Task<bool> Delete(Guid id)
+        public virtual T Delete(T entity)
         {
-            throw new NotImplementedException();
+            return Uow.GetContext().Set<T>().Remove(entity).Entity;
         }
 
         public async Task<T> GetById(Guid id)

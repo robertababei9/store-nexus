@@ -59,5 +59,49 @@ namespace Application.Services.FileService
 
             return response;
         }
+
+        public async Task<BlobDto?> DownloadAsync(string blobFileName)
+        {
+            BlobClient file = _filesContainer.GetBlobClient(blobFileName);
+
+            if (await file.ExistsAsync())
+            {
+                var data = await file.OpenReadAsync();
+                Stream streamData = data;
+
+                byte[] blobContent;
+                using (var stream = new MemoryStream())
+                {
+                    streamData.CopyTo(stream);
+                    blobContent = stream.ToArray();
+                }
+
+                var content = await file.DownloadContentAsync();
+
+                string name = blobFileName;
+                string contentType = content.Value.Details.ContentType;
+
+                return new BlobDto { Content = blobContent, Name = name, ContentType = contentType };
+            }
+
+            return null;
+        }
+
+        public async Task<BlobResponseDto> DeleteAsync(string blobFileName)
+        {
+            var file = _filesContainer.GetBlobClient(blobFileName);
+
+            try
+            {
+                await file.DeleteAsync();
+            }
+            catch (Exception e)
+            {
+                // TODO: log the exception
+                return new BlobResponseDto { Error = true, Status = $"File: {blobFileName} does not exist" };
+            }
+
+            return new BlobResponseDto { Error = false, Status = $"File: {blobFileName} has been successfully deleted" };
+        }
     }
 }

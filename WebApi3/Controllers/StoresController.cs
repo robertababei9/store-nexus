@@ -70,7 +70,24 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(new GetStoreStatuses.Query());
 
             return Ok(result.response);
+        }
 
+        [HttpGet("[action]/{fileName}")]
+        public async Task<IActionResult> DownloadFile(string fileName)
+        {
+            var result = await _mediator.Send(new DownloadFile.Query(fileName));
+
+            var data = result.response.Data;
+
+            return File(data.Content, data.ContentType, data.Name);
+        }
+
+        [HttpGet("[action]/{fileName}")]
+        public async Task<IActionResult> DeleteFile(string fileName)
+        {
+            var result = await _mediator.Send(new DeleteFile.Query(fileName));
+
+            return Ok(result.response);
         }
         #endregion
 

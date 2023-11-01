@@ -12,6 +12,7 @@ namespace Infrastructure.GenericRepository
 
         Task<T> AddAsync(T entity);
         void Update(T entity);
+        T Delete(T entity);
 
 
         IQueryable<T> GetAllQueryable();
@@ -22,7 +23,6 @@ namespace Infrastructure.GenericRepository
 
         Task<IEnumerable<T>> All();
         Task<T> GetById(Guid id);
-        Task<bool> Delete(Guid id);
         Task<bool> Upsert(T entity);
 
         Task SaveChangesAsync();
