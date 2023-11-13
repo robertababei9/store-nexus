@@ -8,10 +8,16 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public Guid? RolePermissionsId { get; set; }
+
+
         public DateTime CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
 
+
         [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }    // one to many relationship
+        [JsonIgnore]
+        public virtual RolePermissions RolePermissions { get; set; }
     }
 }

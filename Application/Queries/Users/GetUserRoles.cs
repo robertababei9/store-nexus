@@ -1,7 +1,5 @@
 ﻿using Infrastructure.Repositories.Contracts;
-using Domain.Dto;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 
 namespace Application.Queries.Users
