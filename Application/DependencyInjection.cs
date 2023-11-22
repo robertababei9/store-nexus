@@ -1,4 +1,6 @@
 ﻿using Application.Services.FileService;
+using Authentication.Services;
+using Authorization.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +20,11 @@ namespace Application
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<FileService>();
 
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthorizationService, AuthorizationService>();
             
+
+
             services.AddMediatR(configuration => 
                 configuration.RegisterServicesFromAssemblies(assembly));
 

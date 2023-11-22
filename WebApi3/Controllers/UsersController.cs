@@ -1,6 +1,7 @@
 ﻿using Application.Commands.Users;
 using Application.Queries.Users;
 using Authentication.Services;
+using Authorization.Attributes;
 using Domain.Dto;
 using Domain.Dto.Users;
 using Domain.Entities;
@@ -32,6 +33,7 @@ namespace store_nexus.Controllers
             _userService = userService;
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.ViewUser))]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
@@ -48,6 +50,7 @@ namespace store_nexus.Controllers
             return Ok(result.response);
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.ViewUser))]
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -56,6 +59,7 @@ namespace store_nexus.Controllers
             return Ok(response.userData);
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.CreateUser))]
         [HttpPost("[action]")]
         public async Task<IActionResult> Add([FromBody] UserToAddDto user)
         {
@@ -76,6 +80,7 @@ namespace store_nexus.Controllers
             return Ok(response.data);
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.EditUser))]
         [HttpPut("[action]")]
         public async Task<IActionResult> Edit([FromBody] UsersDto user)
         {
@@ -91,6 +96,7 @@ namespace store_nexus.Controllers
             }
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.EditUser))]
         [HttpPost("[action]")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordModel)
         {

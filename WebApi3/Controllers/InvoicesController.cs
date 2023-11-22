@@ -1,7 +1,9 @@
 ﻿using Application.Commands.Invoices;
 using Application.Queries.Invoices;
+using Authorization.Attributes;
 using Common.Helpers;
 using Domain.Dto;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +27,7 @@ namespace WebApi.Controllers
 
 
 
-
+        [PermissionsAuthorize(nameof(RolePermissions.ViewInvoice))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAll(Guid id)
         {
@@ -49,6 +51,7 @@ namespace WebApi.Controllers
             return Ok(resultPdf);
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.ViewInvoice))]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
@@ -57,6 +60,7 @@ namespace WebApi.Controllers
             return Ok(response.data);
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.CreateInvoice))]
         [HttpPost("[action]")]
         public async Task<IActionResult> Add([FromBody] InvoiceFormDto invoiceForm)
         {

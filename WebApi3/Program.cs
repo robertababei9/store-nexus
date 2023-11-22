@@ -43,7 +43,6 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddTransient<IUserService, UserService>();
 
 
 // Transient , Scoped, Singleton

@@ -16,26 +16,50 @@ namespace Infrastructure.Repositories
 
         }
 
+        public async Task<IEnumerable<string>> GetRolePermissionsByRoleName(string roleName)
+        {
+            var rolePermissionsEntity = await GetAllQueryable()
+                                        .Include(x => x.RolePermissions)
+                                    .Where(x => x.Name == roleName)
+                                    .Select(x => x.RolePermissions)
+                                    .FirstOrDefaultAsync();
+
+
+            var rolePermissions = ExtractPermissionsFromEntity(rolePermissionsEntity);
+
+            return rolePermissions;
+        }
+
         public async Task<IEnumerable<string>> GetRolePermissionsByRoleId(Guid roleId)
         {
-            var rolePermissionsEntity = GetAllQueryable()
+            var rolePermissionsEntity = await GetAllQueryable()
                                         .Include(x => x.RolePermissions)
                                     .Where(x => x.Id == roleId)
                                     .Select(x => x.RolePermissions)
-                                    .FirstOrDefault();
+                                    .FirstOrDefaultAsync();
 
+            var rolePermissions = ExtractPermissionsFromEntity(rolePermissionsEntity);
+
+            return rolePermissions;
+        }
+
+
+
+
+        private IEnumerable<string> ExtractPermissionsFromEntity(RolePermissions entity)
+        {
             var rolePermissions = new List<string>();
 
-            if (rolePermissionsEntity != null)
+            if (entity != null)
             {
-                var type = rolePermissionsEntity.GetType();
+                var type = entity.GetType();
                 var properties = type.GetProperties();
 
                 foreach (PropertyInfo property in properties)
                 {
                     if (property.PropertyType == typeof(bool))  // permissions are of type bool
                     {
-                        var value = (bool)property.GetValue(rolePermissionsEntity); // get the value
+                        var value = (bool)property.GetValue(entity); // get the value
                         if (value)
                         {
                             rolePermissions.Add(property.Name);

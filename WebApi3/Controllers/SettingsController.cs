@@ -1,8 +1,6 @@
-﻿using Application.Commands.Stores;
-using Application.Commands.Users;
-using Application.Queries.Stores;
-using Application.Services.FileService;
-using Domain.Dto.Stores;
+﻿using Application.Queries.Stores;
+using Authorization.Attributes;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +25,7 @@ namespace WebApi.Controllers
         }
 
         #region ROLES
-        [AllowAnonymous]
+        [PermissionsAuthorize(nameof(RolePermissions.Settings))]
         [HttpGet("[action]/{roleId}")]
         public async Task<IActionResult> GetRolePermissions(Guid roleId)
         {

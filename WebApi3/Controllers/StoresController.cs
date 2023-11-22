@@ -2,7 +2,9 @@
 using Application.Commands.Users;
 using Application.Queries.Stores;
 using Application.Services.FileService;
+using Authorization.Attributes;
 using Domain.Dto.Stores;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +32,7 @@ namespace WebApi.Controllers
         }
 
         #region GETS
+        [PermissionsAuthorize(nameof(RolePermissions.ViewStore))]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
@@ -37,7 +40,7 @@ namespace WebApi.Controllers
 
             return Ok(result.response);
         }
-
+        [PermissionsAuthorize(nameof(RolePermissions.ViewStore))]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAllStoreLocationData()
         {
@@ -46,6 +49,7 @@ namespace WebApi.Controllers
             return Ok(result.response);
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.ViewStore))]
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -92,6 +96,7 @@ namespace WebApi.Controllers
         #endregion
 
         #region POSTS
+        [PermissionsAuthorize(nameof(RolePermissions.CreateStore))]
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateStore([FromBody] CreateStoreDto storeToCreate)
         {
@@ -114,6 +119,7 @@ namespace WebApi.Controllers
         #endregion
 
         #region PUTS
+        [PermissionsAuthorize(nameof(RolePermissions.EditStore))]
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Edit([FromBody] CreateStoreDto storeToEdit)
         {
