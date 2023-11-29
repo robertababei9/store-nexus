@@ -1,4 +1,5 @@
-﻿using Infrastructure.Repositories;
+﻿using Infrastructure.Email;
+using Infrastructure.Repositories;
 using Infrastructure.Repositories.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +12,9 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddScoped<Infrastructure.UnitOfWork.IUnitOfWork, Infrastructure.UnitOfWork.UnitOfWork>();
 
+            #region Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRolesRepository, RolesRepository>();
             services.AddTransient<IRolePermissionsRepository, RolePermissionsRepository>();
@@ -23,6 +26,9 @@ namespace Infrastructure
             services.AddTransient<IStoreLocationRepository, StoreLocationRepository>();
             services.AddTransient<IStoreStatusRepository, StoreStatusRepository>();
             services.AddTransient<IStoreDocumentsRepository, StoreDocumentsRepository>();
+            #endregion
+
+            services.AddTransient<IMailService, MailService>();
 
             return services;
         }

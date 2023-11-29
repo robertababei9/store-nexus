@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
+    <title>Invite</title>
+    <style type="text/css" rel="stylesheet" media="all">
+    /* Base ------------------------------ */
+    
+    @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
+    html {
+        height: 100%;
+    }
+
+    body {
+      width: 100% !important;
+      height: 100%;
+      margin: 0;
+      font-family: "Nunito Sans", Helvetica, Arial, sans-serif;
+      -webkit-text-size-adjust: none;
+      background-color: #F2F4F6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    a {
+      color: #3869D4;
+    }
+    
+    a img {
+      border: none;
+    }
+    
+    td {
+      word-break: break-word;
+    }
+    
+    
+    /*Media Queries ------------------------------ */
+    
+    @media only screen and (max-width: 600px) {
+      .email-body_inner,
+      .email-footer {
+        width: 100% !important;
+      }
+    }
+    
+    </style>
+  </head>
+  <body>
+
+    <div style="max-width: 700px; background-color: white; width: 100%;  padding: 16px 32px;">
+        <h2>Hello there,</h2>
+        <p>
+            {{SENDER_EMAIL}} from {{COMPANY_NAME}} has invited you to join the company and collaborate with them. We're excited to have you on board! Use the button below to set up your account and get started:
+        </p>
+
+        <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+            <a 
+                href="{{ACTION_URL}}"
+                style="color: white; background-color: #4F46E5; padding: 9px 18px; text-decoration: none; border-radius: 4px;">
+                Set up account
+            </a>
+        </div>
+
+        <p style="margin-top: 20px;">
+            Here are some key details:
+        </p>
+        <ul style="margin-bottom: 20px;">
+            <li>Your role: {{USER_ROLE}}</li>
+            <li>Your account email: {{INVITEE_EMAIL}}</li>
+        </ul>
+
+        <p>
+            If you have any questions or need assistance during the onboarding process, feel free to contact us at <b>info@storenexus.shop</b>. We're here to help!
+        </p>
+
+        <p>
+            Welcome to {{COMPANY_NAME}},
+            <br>
+            The {{COMPANY_NAME}} Team
+        </p>
+
+        <div style="height: 1px; width: 100%; background-color: rgba(128, 128, 128, 0.249);"></div>
+
+        <p style="font-size: 13px; color: #51545E; margin-top: 32px;">If you're having trouble with the button above, copy and paste the URL below into your web browser or click here dirrectly.</p>
+        <a
+            href="{{ACTION_URL}}"
+            style="font-size: 12px; color: #51545E; text-decoration: none;"
+        >{{ACTION_URL}}
+        </a>
+    </div>
+
+  </body>
+</html>

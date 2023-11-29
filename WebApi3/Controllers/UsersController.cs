@@ -72,6 +72,15 @@ namespace store_nexus.Controllers
             return Ok(response);
         }
 
+        [PermissionsAuthorize(nameof(RolePermissions.CreateUser))]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> InviteUser([FromBody] InviteUserDto userToInvite)
+        {
+            var response = await _mediator.Send(new InviteUser.Command(userToInvite));
+
+            return Ok(response.response);
+        }
+
         [HttpGet("[action]")]
         public async Task<IActionResult> GetUserRoles()
         {

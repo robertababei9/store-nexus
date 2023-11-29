@@ -1,8 +1,8 @@
 using Application;
 using Authentication.Services;
 using Infrastructure;
+using Infrastructure.Email;
 using Infrastructure.Persistence;
-using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -35,14 +35,14 @@ builder.Services.AddEndpointsApiExplorer();
 
 // configure services
 builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("ApplicationSettings"));
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
 
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 // Transient , Scoped, Singleton
