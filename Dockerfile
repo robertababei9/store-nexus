@@ -9,6 +9,7 @@ COPY ["Domain", "Domain/"]
 COPY ["Common", "Common/"]
 COPY ["Infrastructure", "Infrastructure/"]
 COPY ["Authentication", "Authentication/"]
+COPY ["Authorization", "Authorization/"]
 COPY ["Application", "Application/"]
 COPY ["WebApi3", "WebApi/"]
 RUN dotnet restore "WebApi/WebApi.csproj"
