@@ -5,6 +5,7 @@ using Infrastructure.Email;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -19,8 +20,16 @@ builder.Environment.EnvironmentName = environmentName;
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
+// add logging
+builder.Logging.AddAzureWebAppDiagnostics();
+builder.Services.Configure<AzureFileLoggerOptions>(options =>
+{
+    options.FileName = "logs-";
+    options.FileSizeLimit = 50 * 1024;
+    options.RetainedFileCountLimit = 5;
+});
 
-// Add services to the container.
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -33,10 +42,6 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-// configure services
-builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("ApplicationSettings"));
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(
@@ -44,6 +49,9 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
         b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
 
 
+// configure services
+builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("ApplicationSettings"));
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 // Transient , Scoped, Singleton
 builder.Services
