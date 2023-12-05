@@ -70,18 +70,22 @@ namespace Application.Commands.Users
                     }
 
                     // read the content of email template
-                    string executableDirectory = Path.Combine(AppContext.BaseDirectory, "invite_user_template.html");
-                    _logger.LogInformation($"InviteUser -> Getting root path for executableDirectory: {executableDirectory}");
+                    //string executableDirectory = Path.Combine(AppContext.BaseDirectory, "invite_user_template.html");
+                    //_logger.LogInformation($"InviteUser -> Getting root path for executableDirectory: {executableDirectory}");
 
-                    string solutionRoot = Path.GetFullPath(Path.Combine(executableDirectory, @"..\..\..\..\.."));
-                    _logger.LogInformation($"InviteUser -> Getting root path for solutionRoot: {solutionRoot}");
+                    //string solutionRoot = Path.GetFullPath(Path.Combine(executableDirectory, @"..\..\..\..\.."));
+                    //_logger.LogInformation($"InviteUser -> Getting root path for solutionRoot: {solutionRoot}");
 
-                    string htmlFilePath = Path.Combine(solutionRoot, "Common", "EmailTemplates", "invite_user_template.html");
-                    string htmlContent;
-                    using (StreamReader reader = new StreamReader(htmlFilePath))
-                    {
-                        htmlContent = await reader.ReadToEndAsync();
-                    }
+                    //string htmlFilePath = Path.Combine(solutionRoot, "Common", "EmailTemplates", "invite_user_template.html");
+                    //string htmlContent;
+                    //using (StreamReader reader = new StreamReader(htmlFilePath))
+                    //{
+                    //    htmlContent = await reader.ReadToEndAsync();
+                    //}
+
+                    string baseDirectory = AppContext.BaseDirectory;
+                    _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
+                    var htmlContent = "<div>Buna ziua</div>";
 
                     // replace content
                     var currentLoggedInUserId = _httpContextAccessor.HttpContext.User.FindFirst("Id")?.Value;

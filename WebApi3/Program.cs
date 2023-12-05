@@ -5,7 +5,6 @@ using Infrastructure.Email;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.AzureAppServices;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -27,14 +26,6 @@ builder.Logging.AddApplicationInsights(
         config.ConnectionString = builder.Configuration.GetConnectionString("AppInsights"),
     configureApplicationInsightsLoggerOptions: (options) => { }
 );
-
-builder.Services.Configure<AzureFileLoggerOptions>(options =>
-{
-    options.FileName = "logs-";
-    options.FileSizeLimit = 50 * 1024;
-    options.RetainedFileCountLimit = 5;
-});
-
 
 
 builder.Services.AddControllers()
