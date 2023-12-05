@@ -22,6 +22,12 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 
 // add logging
 builder.Logging.AddAzureWebAppDiagnostics();
+builder.Logging.AddApplicationInsights(
+    configureTelemetryConfiguration: (config) =>
+        config.ConnectionString = builder.Configuration.GetConnectionString("AppInsights"),
+    configureApplicationInsightsLoggerOptions: (options) => { }
+);
+
 builder.Services.Configure<AzureFileLoggerOptions>(options =>
 {
     options.FileName = "logs-";
