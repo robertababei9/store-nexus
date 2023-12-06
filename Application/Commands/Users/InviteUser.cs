@@ -84,7 +84,7 @@ namespace Application.Commands.Users
                     //}
 
                     string baseDirectory = AppContext.BaseDirectory;
-                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "Common", "EmailTemplates", "invite_user_template.html");
+                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "src", "Common", "EmailTemplates", "invite_user_template.html");
 
                     _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
                     _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
