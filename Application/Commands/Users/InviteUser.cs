@@ -89,6 +89,22 @@ namespace Application.Commands.Users
                     _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
                     _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
 
+                    // List files
+                    string[] files = Directory.GetFiles(baseDirectory);
+                    _logger.LogInformation($"Files: ${files}");
+                    foreach (string file in files)
+                    {
+                        _logger.LogInformation($"----- {file} -----");
+                    }
+
+                    // List directories
+                    string[] directories = Directory.GetDirectories(baseDirectory);
+                    _logger.LogInformation("Directories: ");
+                    foreach (string directory in directories)
+                    {
+                        _logger.LogInformation($"##### {directory} #####");
+                    }
+
                     if (File.Exists(inviteUserTemplatePath))
                     {
                         _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
