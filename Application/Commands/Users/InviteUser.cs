@@ -84,7 +84,24 @@ namespace Application.Commands.Users
                     //}
 
                     string baseDirectory = AppContext.BaseDirectory;
+                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "Common", "EmailTemplates", "invite_user_template.html");
+
                     _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
+                    _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
+
+                    if (File.Exists(inviteUserTemplatePath))
+                    {
+                        _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
+                        using (StreamReader reader = new StreamReader(inviteUserTemplatePath))
+                        {
+                            var hc = await reader.ReadToEndAsync();
+                            _logger.LogInformation($"hc = ${hc}");
+                        }
+                    }
+                    else
+                    {
+
+                    }
                     var htmlContent = "<div>Buna ziua</div>";
 
                     // replace content
