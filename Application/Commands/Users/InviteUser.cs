@@ -84,7 +84,7 @@ namespace Application.Commands.Users
                     //}
 
                     string baseDirectory = AppContext.BaseDirectory;
-                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "src", "Common", "EmailTemplates", "invite_user_template.html");
+                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "Common", "EmailTemplates", "invite_user_template.html");
 
                     _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
                     _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
@@ -108,7 +108,14 @@ namespace Application.Commands.Users
 
                     string htmlContent;
 
-                    _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
+                    if (File.Exists(inviteUserTemplatePath))
+                    {
+                        _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
+                    }
+                    else
+                    {
+                        _logger.LogInformation("______________ Does not exist _______________Sorry");
+                    }
                     using (StreamReader reader = new StreamReader(inviteUserTemplatePath))
                     {
                         htmlContent = await reader.ReadToEndAsync();
