@@ -90,35 +90,31 @@ namespace Application.Commands.Users
                     _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
 
                     // List files
-                    string[] files = Directory.GetFiles(baseDirectory);
-                    _logger.LogInformation($"Files: ${files}");
-                    foreach (string file in files)
+                    //string[] files = Directory.GetFiles(baseDirectory);
+                    //_logger.LogInformation($"Files: ${files}");
+                    //foreach (string file in files)
+                    //{
+                    //    _logger.LogInformation($"----- {file} -----");
+                    //}
+
+                    //// List directories
+                    //string[] directories = Directory.GetDirectories(baseDirectory);
+                    //_logger.LogInformation("Directories: ");
+                    //foreach (string directory in directories)
+                    //{
+                    //    _logger.LogInformation($"##### {directory} #####");
+                    //}
+
+
+                    string htmlContent;
+
+                    _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
+                    using (StreamReader reader = new StreamReader(inviteUserTemplatePath))
                     {
-                        _logger.LogInformation($"----- {file} -----");
+                        htmlContent = await reader.ReadToEndAsync();
+                        _logger.LogInformation($"hc = ${htmlContent}");
                     }
 
-                    // List directories
-                    string[] directories = Directory.GetDirectories(baseDirectory);
-                    _logger.LogInformation("Directories: ");
-                    foreach (string directory in directories)
-                    {
-                        _logger.LogInformation($"##### {directory} #####");
-                    }
-
-                    if (File.Exists(inviteUserTemplatePath))
-                    {
-                        _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
-                        using (StreamReader reader = new StreamReader(inviteUserTemplatePath))
-                        {
-                            var hc = await reader.ReadToEndAsync();
-                            _logger.LogInformation($"hc = ${hc}");
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                    var htmlContent = "<div>Buna ziua</div>";
 
                     // replace content
                     var currentLoggedInUserId = _httpContextAccessor.HttpContext.User.FindFirst("Id")?.Value;
