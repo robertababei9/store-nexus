@@ -20,12 +20,15 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
 // add logging
-builder.Logging.AddAzureWebAppDiagnostics();
-builder.Logging.AddApplicationInsights(
-    configureTelemetryConfiguration: (config) =>
-        config.ConnectionString = builder.Configuration.GetConnectionString("AppInsights"),
-    configureApplicationInsightsLoggerOptions: (options) => { }
-);
+if (builder.Environment.IsProduction())
+{
+    builder.Logging.AddAzureWebAppDiagnostics();
+    builder.Logging.AddApplicationInsights(
+        configureTelemetryConfiguration: (config) =>
+            config.ConnectionString = builder.Configuration.GetConnectionString("AppInsights"),
+        configureApplicationInsightsLoggerOptions: (options) => { }
+    );
+}
 
 
 builder.Services.AddControllers()

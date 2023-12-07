@@ -12,6 +12,7 @@ using Infrastructure.Email;
 using MimeKit;
 using Application.ExecutionHelper;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace Application.Commands.Users
 {
@@ -83,8 +84,8 @@ namespace Application.Commands.Users
                     //    htmlContent = await reader.ReadToEndAsync();
                     //}
 
-                    string baseDirectory = AppContext.BaseDirectory;
-                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "publish", "Common", "EmailTemplates", "invite_user_template.html");
+                    string baseDirectory = Directory.GetCurrentDirectory();
+                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "Common", "EmailTemplates", "invite_user_template.html");
 
                     _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
                     _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
@@ -94,25 +95,18 @@ namespace Application.Commands.Users
                     string htmlPath = Path.Combine(a, "Common", "EmailTemplates", "invite_user_template.html");
 
 
-                    _logger.LogInformation($"InviteUser ---> directory = {directory}");
-                    _logger.LogInformation($"InviteUser ---> a = {a}");
-                    _logger.LogInformation($"InviteUser ---> htmlPath = {htmlPath}");
+                    var files = Directory.EnumerateFiles(baseDirectory);
 
-                    // List files
-                    //string[] files = Directory.GetFiles(baseDirectory);
-                    //_logger.LogInformation($"Files: ${files}");
-                    //foreach (string file in files)
-                    //{
-                    //    _logger.LogInformation($"----- {file} -----");
-                    //}
+                    _logger.LogInformation($"InviteUser ---> The following files from {baseDirectory} are:");
 
-                    //// List directories
-                    //string[] directories = Directory.GetDirectories(baseDirectory);
-                    //_logger.LogInformation("Directories: ");
-                    //foreach (string directory in directories)
-                    //{
-                    //    _logger.LogInformation($"##### {directory} #####");
-                    //}
+                    foreach( var file in files)
+                    {
+                        _logger.LogInformation($"file = {file}");
+                    }
+
+
+
+
 
 
                     string htmlContent;
