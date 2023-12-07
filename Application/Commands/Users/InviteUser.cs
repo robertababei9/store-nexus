@@ -89,6 +89,15 @@ namespace Application.Commands.Users
                     _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
                     _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
 
+                    var directory = Directory.GetCurrentDirectory();
+                    string a = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                    string htmlPath = Path.Combine(a, "Common", "EmailTemplates", "invite_user_template.html");
+
+
+                    _logger.LogInformation($"InviteUser ---> directory = {directory}");
+                    _logger.LogInformation($"InviteUser ---> a = {a}");
+                    _logger.LogInformation($"InviteUser ---> htmlPath = {htmlPath}");
+
                     // List files
                     //string[] files = Directory.GetFiles(baseDirectory);
                     //_logger.LogInformation($"Files: ${files}");
@@ -108,7 +117,7 @@ namespace Application.Commands.Users
 
                     string htmlContent;
 
-                    if (File.Exists(inviteUserTemplatePath))
+                    if (File.Exists(htmlPath))
                     {
                         _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
                     }
