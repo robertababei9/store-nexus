@@ -96,12 +96,20 @@ namespace Application.Commands.Users
 
 
                     var files = Directory.EnumerateFiles(baseDirectory);
+                    var folders = Directory.EnumerateDirectories(baseDirectory);
 
                     _logger.LogInformation($"InviteUser ---> The following files from {baseDirectory} are:");
 
                     foreach( var file in files)
                     {
                         _logger.LogInformation($"file = {file}");
+                    }
+
+                    _logger.LogInformation($"InviteUser ---> And now ... Let's see the folders / directories for {baseDirectory}:");
+
+                    foreach (var folder in folders)
+                    {
+                        _logger.LogInformation($"file = {folder}");
                     }
 
 
