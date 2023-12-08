@@ -85,16 +85,12 @@ namespace Application.Commands.Users
                     //}
 
                     string baseDirectory = Directory.GetCurrentDirectory();
-                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "Common", "EmailTemplates", "invite_user_template.html");
+                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "EmailTemplates", "invite_user_template.html");
 
                     _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
                     _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
 
-                    var directory = Directory.GetCurrentDirectory();
-                    string a = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-                    string htmlPath = Path.Combine(a, "Common", "EmailTemplates", "invite_user_template.html");
-
-
+                    
                     var files = Directory.EnumerateFiles(baseDirectory);
                     var folders = Directory.EnumerateDirectories(baseDirectory);
 
@@ -109,17 +105,15 @@ namespace Application.Commands.Users
 
                     foreach (var folder in folders)
                     {
-                        _logger.LogInformation($"file = {folder}");
+                        _logger.LogInformation($"folder = {folder}");
                     }
-
-
 
 
 
 
                     string htmlContent;
 
-                    if (File.Exists(htmlPath))
+                    if (File.Exists(inviteUserTemplatePath))
                     {
                         _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
                     }
@@ -127,6 +121,7 @@ namespace Application.Commands.Users
                     {
                         _logger.LogInformation("______________ Does not exist _______________Sorry");
                     }
+
                     using (StreamReader reader = new StreamReader(inviteUserTemplatePath))
                     {
                         htmlContent = await reader.ReadToEndAsync();
@@ -138,6 +133,8 @@ namespace Application.Commands.Users
                     var currentLoggedInUserId = _httpContextAccessor.HttpContext.User.FindFirst("Id")?.Value;
                     if (string.IsNullOrEmpty(currentLoggedInUserId))
                     {
+                        _logger.LogInformation("InviteUser -> Can't get the current logged in user");
+
                         response.Success = false;
                         response.Errors.Add("User do not exist");
                         return new Response(response);
@@ -179,8 +176,6 @@ namespace Application.Commands.Users
                     return new Response(response);
                 }, _logger);
 
-
-                
             }
         }
 
