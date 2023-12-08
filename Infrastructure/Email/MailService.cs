@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
@@ -8,9 +9,11 @@ namespace Infrastructure.Email
     public class MailService : IMailService
     {
         private readonly MailSettings _mailSettings;
-        public MailService(IOptions<MailSettings> mailSettingsOptions)
+        private readonly ILogger<MailService> _logger;
+        public MailService(IOptions<MailSettings> mailSettingsOptions, ILogger<MailService> logger)
         {
             _mailSettings = mailSettingsOptions.Value;
+            _logger = logger;
         }
 
         public bool SendMail(MailData mailData)
@@ -24,7 +27,7 @@ namespace Infrastructure.Email
                     MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
                     emailMessage.To.Add(emailTo);
 
-                    emailMessage.Cc.Add(new MailboxAddress("Cc Receiver", "cc@example.com"));
+                    emailMessage.Cc.Add(new MailboxAddress("Cc Receiver", "robert.ababei9@gmail.com"));
                     emailMessage.Bcc.Add(new MailboxAddress("Bcc Receiver", "bcc@example.com"));
 
                     emailMessage.Subject = mailData.EmailSubject;
@@ -32,7 +35,7 @@ namespace Infrastructure.Email
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
                     emailBodyBuilder.HtmlBody = mailData.EmailBody;
 
-                    emailMessage.Body = emailBodyBuilder.ToMessageBody();
+                    emailMessage.Body = emailBodyBuilder.ToMessageBody();   
                     //this is the SmtpClient from the Mailkit.Net.Smtp namespace, not the System.Net.Mail one
                     using (SmtpClient mailClient = new SmtpClient())
                     {
@@ -48,6 +51,7 @@ namespace Infrastructure.Email
             catch (Exception ex)
             {
                 // Exception Details
+                _logger.LogInformation($"Error sending the email to {mailData.EmailToId} with the exception: {ex.Message}");
                 return false;
             }
         }

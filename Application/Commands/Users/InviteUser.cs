@@ -13,6 +13,8 @@ using MimeKit;
 using Application.ExecutionHelper;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
+using Application.ExecutionHelper.Exceptions;
+using Common.Constants;
 
 namespace Application.Commands.Users
 {
@@ -58,7 +60,7 @@ namespace Application.Commands.Users
             {
                 return await ExecuteFunc.TryExecute<Task<Response>>(async () =>
                 {
-                    _logger.LogInformation("Started execution for InviteUser started");
+                    _logger.LogInformation("InviteUser -> Started execution for InviteUser started");
                     var response = new ApiResponseModel<bool>();
 
                     // check if another email already exist
@@ -66,66 +68,38 @@ namespace Application.Commands.Users
                     if (emailAlreadyExist)
                     {
                         response.Success = false;
-                        response.Errors.Add("Email address is already in use");
+                        response.Errors.Add("InviteUser -> Email address is already in use");
                         return new Response(response);
                     }
 
-                    // read the content of email template
-                    //string executableDirectory = Path.Combine(AppContext.BaseDirectory, "invite_user_template.html");
-                    //_logger.LogInformation($"InviteUser -> Getting root path for executableDirectory: {executableDirectory}");
-
-                    //string solutionRoot = Path.GetFullPath(Path.Combine(executableDirectory, @"..\..\..\..\.."));
-                    //_logger.LogInformation($"InviteUser -> Getting root path for solutionRoot: {solutionRoot}");
-
-                    //string htmlFilePath = Path.Combine(solutionRoot, "Common", "EmailTemplates", "invite_user_template.html");
-                    //string htmlContent;
-                    //using (StreamReader reader = new StreamReader(htmlFilePath))
-                    //{
-                    //    htmlContent = await reader.ReadToEndAsync();
-                    //}
-
                     string baseDirectory = Directory.GetCurrentDirectory();
-                    string inviteUserTemplatePath = Path.Combine(baseDirectory, "EmailTemplates", "invite_user_template.html");
-
-                    _logger.LogInformation($"InviteUser -> Test -> Getting baseDirectory path: {baseDirectory}");
-                    _logger.LogInformation($"InviteUser -> Test 2 -> inviteUserTemplate = {inviteUserTemplatePath}");
-
-                    
-                    var files = Directory.EnumerateFiles(baseDirectory);
-                    var folders = Directory.EnumerateDirectories(baseDirectory);
-
-                    _logger.LogInformation($"InviteUser ---> The following files from {baseDirectory} are:");
-
-                    foreach( var file in files)
+                    string inviteUserTemplatePath = baseDirectory;
+                    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    if (env == "Production")
                     {
-                        _logger.LogInformation($"file = {file}");
-                    }
-
-                    _logger.LogInformation($"InviteUser ---> And now ... Let's see the folders / directories for {baseDirectory}:");
-
-                    foreach (var folder in folders)
-                    {
-                        _logger.LogInformation($"folder = {folder}");
-                    }
-
-
-
-
-                    string htmlContent;
-
-                    if (File.Exists(inviteUserTemplatePath))
-                    {
-                        _logger.LogInformation($"InviteUser -> The file indeed --- EXIST and it looks like this: ");
+                        inviteUserTemplatePath = Path.Combine(baseDirectory, "EmailTemplates", "invite_user_template.html");
                     }
                     else
                     {
-                        _logger.LogInformation("______________ Does not exist _______________Sorry");
+                        inviteUserTemplatePath = Path.Combine(baseDirectory, "..\\Common\\EmailTemplates", "invite_user_template.html");
                     }
 
-                    using (StreamReader reader = new StreamReader(inviteUserTemplatePath))
+
+                    string htmlContent = "";
+
+                    if (File.Exists(inviteUserTemplatePath))
                     {
-                        htmlContent = await reader.ReadToEndAsync();
-                        _logger.LogInformation($"hc = ${htmlContent}");
+                        _logger.LogInformation($"InviteUser -> Reading the file content from {inviteUserTemplatePath}");
+
+                        using (StreamReader reader = new StreamReader(inviteUserTemplatePath))
+                        {
+                            htmlContent = await reader.ReadToEndAsync();
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"InviteUser -> Couldn't find the file at {inviteUserTemplatePath}");
+                        throw new Exception($"File not found at {inviteUserTemplatePath}");
                     }
 
 
@@ -150,7 +124,7 @@ namespace Application.Commands.Users
                     htmlContent = htmlContent.Replace("{{COMPANY_NAME}}", user.Company.Name);
                     htmlContent = htmlContent.Replace("{{USER_ROLE}}", role);
                     htmlContent = htmlContent.Replace("{{INVITEE_EMAIL}}", request.userToInvite.Email);
-                    htmlContent = htmlContent.Replace("{{ACTION_URL}}", "https://store-nexus-app.netlify.app/");
+                    htmlContent = htmlContent.Replace("{{ACTION_URL}}", Constants.WEBSITE_URL);
 
 
                     // send email with template
@@ -165,14 +139,14 @@ namespace Application.Commands.Users
 
                     if (!emailWasSent)
                     {
-                        _logger.LogInformation("Something went wrong trying to send the email to: ", mailData.EmailToId);
+                        _logger.LogInformation("InviteUser -> Something went wrong trying to send the email to: ", mailData.EmailToId);
                         
                         response.Success = false;
                         response.Errors.Add("Couldn't send the email to " + request.userToInvite.Email);
                         return new Response(response);
                     }
 
-                    _logger.LogInformation("Finished execution for InviteUser(). Email successfully sent");
+                    _logger.LogInformation("InviteUser -> Finished execution for InviteUser(). Email successfully sent");
                     return new Response(response);
                 }, _logger);
 
