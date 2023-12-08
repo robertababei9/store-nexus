@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="EmailTemplates\" />
     <Folder Include="InvoiceTemplates\" />
+    <Content Include="EmailTemplates\invite_user_template.html" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
