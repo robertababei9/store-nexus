@@ -75,13 +75,14 @@ namespace Application.Commands.Users
                     string baseDirectory = Directory.GetCurrentDirectory();
                     string inviteUserTemplatePath = baseDirectory;
                     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                    if (env == "Production")
+                    _logger.LogInformation($"InviteUser -> Creating path file for {env} ENVIRONMENT");
+                    if (env == "Development")
                     {
-                        inviteUserTemplatePath = Path.Combine(baseDirectory, "EmailTemplates", "invite_user_template.html");
+                        inviteUserTemplatePath = Path.Combine(baseDirectory, "..\\Common\\EmailTemplates", "invite_user_template.html");
                     }
                     else
                     {
-                        inviteUserTemplatePath = Path.Combine(baseDirectory, "..\\Common\\EmailTemplates", "invite_user_template.html");
+                        inviteUserTemplatePath = Path.Combine(baseDirectory, "EmailTemplates", "invite_user_template.html");
                     }
 
 
