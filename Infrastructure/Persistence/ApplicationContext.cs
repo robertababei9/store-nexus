@@ -14,9 +14,10 @@ namespace Infrastructure.Persistence
         }
 
         #region Entities
-        public DbSet<Company> Company{ get; set; }
+        public DbSet<Company> Company { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserDetails> UserDetails{ get; set; }
+        public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<UserInvitations> UserInvitations { get; set;}
         public DbSet<Role> Roles { get; set; }
         public DbSet<RolePermissions> RolePermissions { get; set; }
         public DbSet<Invoice> Invoice { get; set; }
@@ -36,6 +37,7 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Company>(CompanyModelBuilder.Get());
             modelBuilder.Entity<User>(UserModelBuilder.Get());
             modelBuilder.Entity<UserDetails>(UserDetailsModelBuilder.Get());
+            modelBuilder.Entity<UserInvitations>(UserInvitationsModelBuilder.Get());
             modelBuilder.Entity<Role>(RoleModelBuilder.Get());
             modelBuilder.Entity<RolePermissions>(RolePermissionsModelBuilder.Get());
             modelBuilder.Entity<Invoice>(InvoiceModelBuilder.Get());

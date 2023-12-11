@@ -2,6 +2,8 @@
 using Domain.Dto;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Application.ExecutionHelper;
 
 namespace Application.Queries.Users
 {
@@ -14,18 +16,26 @@ namespace Application.Queries.Users
         // Handler
         public class Handler : IRequestHandler<Query, Response>
         {
+            private readonly ILogger<Handler> _logger;
+
             protected IUserRepository _userRepository { get; set; }
-            public Handler(IUserRepository userRepository)
+
+            public Handler(ILogger<Handler> logger,
+                IUserRepository userRepository)
             {
+                _logger = logger;
                 _userRepository = userRepository;
             }
 
             public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
             {
-                var results = _userRepository
+                return await ExecuteFunc.TryExecute<Task<Response>>(async () =>
+                {
+                    var results = _userRepository
                     .GetAllQueryable()
                         .Include(x => x.Role)
                         .Include(x => x.UserDetails)
+                    .Where(x => x.UserDetails != null)
                     .Select(x => new UsersDto
                     {
                         Id = x.Id,
@@ -44,6 +54,7 @@ namespace Application.Queries.Users
                     }).ToList();
 
                 return new Response(results);
+                }, _logger);
             }
         }
 

@@ -20,10 +20,12 @@ namespace Application.ExecutionHelper
             }
             catch ( StoreNexusException ex )
             {
+                logger.LogInformation($"Exception: {callerMethodName} ---> {ex.Message}");
                 throw new StoreNexusException(ex.Message, ex, ExceptionCode.CodeError);
             }
             catch ( Exception ex )
             {
+                logger.LogInformation($"Exception: {callerMethodName} ---> {ex.Message}");
                 throw new StoreNexusException(callerMethodName + ".Exception -> " + ex.Message, ex, ExceptionCode.Invalid);
             }
         }

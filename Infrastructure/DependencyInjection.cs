@@ -16,9 +16,10 @@ namespace Infrastructure
 
             #region Repositories
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserDetailsRepository, UserDetailsRepository>();
+            services.AddTransient<IUserInvitationsRepository, UserInvitationsRepository>();
             services.AddTransient<IRolesRepository, RolesRepository>();
             services.AddTransient<IRolePermissionsRepository, RolePermissionsRepository>();
-            services.AddTransient<IUserDetailsRepository, UserDetailsRepository>();
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
             services.AddTransient<IInvoiceItemRepository, InvoiceItemRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();

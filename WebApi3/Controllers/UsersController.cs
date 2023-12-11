@@ -134,21 +134,31 @@ namespace store_nexus.Controllers
             }
         }
 
+        //[AllowAnonymous]
+        //[HttpPost]
+        //[Route("register")]
+        //public async Task<IActionResult> Register([FromBody] RegisterResource registerModel)
+        //{
+        //    try
+        //    {
+        //        var result = await _userService.Register(registerModel, CancellationToken.None);
+
+        //        return Created(nameof(Register), result.Id);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        //    }
+        //}
+
         [AllowAnonymous]
         [HttpPost]
-        [Route("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterResource registerModel)
+        [Route("[action]")]
+        public async Task<IActionResult> RegisterFromInvitee([FromBody] RegisterFromInviteeResource registerFromInviteeModel)
         {
-            try
-            {
-                var result = await _userService.Register(registerModel, CancellationToken.None);
+            var response = await _mediator.Send(new RegisterFromInvitee.Command(registerFromInviteeModel));
 
-                return Created(nameof(Register), result.Id);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            return Ok(response.response);
         }
     }
 }

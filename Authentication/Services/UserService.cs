@@ -66,11 +66,25 @@ namespace Authentication.Services
         public async Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken)
         {
             var user = GetRegisteredUserModel(resource);
+            var userDetails = new UserDetails
+            {
+                FirstName = resource.FirstName,
+                LastName = resource.LastName,
+                Contact = null,
+                Country = null,
+                City = null,
+                SignUpDate = DateOnly.FromDateTime(DateTime.Now),
+                //UserId = user.Id,
+            };
+            user.UserDetails = userDetails;
 
             try
             {
                 await _userRepository.AddAsync(user);
                 await _userRepository.SaveChangesAsync();
+
+
+
             }
             catch (Exception e)
             {
@@ -85,10 +99,11 @@ namespace Authentication.Services
         {
             var user = new User
             {
-                Name = resource.Name,
+                Name = resource.FirstName + " " + resource.LastName,
                 Email = resource.Email,
                 RoleId = resource.RoleId,
-                PasswordSalt = PasswordHasher.GenerateSalt()
+                PasswordSalt = PasswordHasher.GenerateSalt(),
+                CompanyId = resource.CompanyId,
             };
 
             user.PasswordHash = PasswordHasher.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);

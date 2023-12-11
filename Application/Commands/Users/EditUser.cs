@@ -53,9 +53,11 @@ namespace Application.Commands.Users
                     {
                         var userRegisterModel = _userService.GetRegisteredUserModel(new RegisterResource(
                             request.userToEdit.FirstName,
+                            request.userToEdit.LastName,
                             request.userToEdit.Email,
                             request.userToEdit.Password,
-                            request.userToEdit.RoleId));
+                            request.userToEdit.RoleId,
+                            user.CompanyId));
 
                         user.PasswordSalt = userRegisterModel.PasswordSalt;
                         user.PasswordHash = userRegisterModel.PasswordHash;

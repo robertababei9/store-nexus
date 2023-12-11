@@ -60,11 +60,14 @@ namespace Application.Commands.Users
 
                 var userWithPasswordModel = _userService.GetRegisteredUserModel(
                     new RegisterResource(
-                        request.userToAdd.FirstName + " " + request.userToAdd.LastName,
+                        request.userToAdd.FirstName,
+                        request.userToAdd.LastName,
                         request.userToAdd.Email,
                         request.userToAdd.Password,
-                        request.userToAdd.RoleId)
+                        request.userToAdd.RoleId,
+                        companyId)
                 );
+
                 user.PasswordSalt = userWithPasswordModel.PasswordSalt;
                 user.PasswordHash = userWithPasswordModel.PasswordHash;
 
