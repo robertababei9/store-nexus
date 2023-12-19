@@ -4,7 +4,7 @@ using Domain.Entities;
 using MediatR;
 using Common.Models;
 
-namespace Application.Queries.Stores
+namespace Application.Queries.Settings
 {
     public static class GetRolePermissions
     {

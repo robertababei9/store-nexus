@@ -38,5 +38,27 @@ namespace Domain.Entities
 
         [JsonIgnore]
         public virtual Role Role { get; set; }    // one to many relationship
+
+
+        public bool MapPermissions(Dictionary<string, bool> permissions)
+        {
+            bool result = true;
+            foreach(var kvp in permissions)
+            {
+                // Check if the property exist in the RolePermissions class
+                var property = typeof(RolePermissions).GetProperty(kvp.Key);
+                if (property != null && property.CanWrite)
+                {
+                    // Update the property value
+                    property.SetValue(this, kvp.Value);
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+
+            return result;
+        }
     }
 }

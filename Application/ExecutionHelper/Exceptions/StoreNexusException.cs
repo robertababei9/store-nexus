@@ -6,6 +6,11 @@ namespace Application.ExecutionHelper.Exceptions
     {
         public ExceptionCode ExceptionCode { private set; get; } = ExceptionCode.Invalid;
 
+        public StoreNexusException(string message) : base(message)
+        {
+
+        }
+
         public StoreNexusException(string message, Exception innerException, ExceptionCode exceptionCode)
             : base(message, innerException)
         {
