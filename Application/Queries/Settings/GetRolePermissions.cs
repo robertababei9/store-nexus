@@ -3,6 +3,8 @@ using Domain.Dto;
 using Domain.Entities;
 using MediatR;
 using Common.Models;
+using Application.ExecutionHelper;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Queries.Settings
 {
@@ -15,31 +17,37 @@ namespace Application.Queries.Settings
         // Handler
         public class Handler : IRequestHandler<Query, Response>
         {
+            private readonly ILogger<Handler> _logger;
             protected IRolesRepository _rolesRepository { get; set; }
 
-            public Handler(IRolesRepository rolesRepository)
+            public Handler(ILogger<Handler> logger,
+                IRolesRepository rolesRepository)
             {
+                _logger = logger;
                 _rolesRepository = rolesRepository;
             }
 
             public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
             {
-                var response = new ApiResponseModel<List<string>>();
-
-                try
+                return await ExecuteFunc.TryExecute<Task<Response>>(async () =>
                 {
-                    var rolePermissions = (await _rolesRepository.GetRolePermissionsByRoleId(request.roleId)).ToList();
-                    response.Data = rolePermissions;
-                }
-                catch (Exception e)
-                {
-                    response.Success = false;
-                    response.Errors.Add(e.Message);
-                }
+                    var response = new ApiResponseModel<List<string>>();
+
+                    try
+                    {
+                        var rolePermissions = (await _rolesRepository.GetRolePermissionsByRoleId(request.roleId)).ToList();
+                        response.Data = rolePermissions;
+                    }
+                    catch (Exception e)
+                    {
+                        response.Success = false;
+                        response.Errors.Add(e.Message);
+                    }
 
 
+                    return new Response(response);
 
-                return new Response(response);
+                }, _logger);
             }
         }
 

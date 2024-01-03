@@ -19,5 +19,7 @@ namespace Domain.Entities
 
         [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }    // one to many relationship
+        [JsonIgnore]
+        public virtual ICollection<Store> Stores { get; set; }  // one to many relationship
     }
 }

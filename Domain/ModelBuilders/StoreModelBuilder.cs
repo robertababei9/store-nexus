@@ -10,6 +10,10 @@ namespace Domain.ModelBuilders
             return
                 entity =>
                 {
+                    entity.HasOne(x => x.Company)
+                        .WithMany(r => r.Stores)
+                        .HasForeignKey(x => x.CompanyId);
+
                     entity.HasOne(x => x.Manager)
                         .WithMany(r => r.Stores)
                         .HasForeignKey(x => x.ManagerId);
