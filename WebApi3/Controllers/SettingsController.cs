@@ -62,5 +62,26 @@ namespace WebApi.Controllers
         }
 
         #endregion
+
+        #region Map
+        //[PermissionsAuthorize(nameof(RolePermissions.EditDashboard))]
+        // TOOD: Maybe to create a new attribute like PermissionsAuthorizeAny to have access if any of these
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetMapSettings()
+        {
+            var result = await _mediator.Send(new GetMapSettings.Query());
+
+            return Ok(result.response);
+        }
+        //[PermissionsAuthorize(nameof(RolePermissions.))]
+        // TOOD: Maybe to create a new attribute like PermissionsAuthorizeAny to have access if any of these
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SaveMapSettings([FromBody] MapSettingsDto mapSettings)
+        {
+            var result = await _mediator.Send(new SaveMapSettings.Command(mapSettings));
+
+            return Ok(result.response);
+        }
+        #endregion
     }
 }

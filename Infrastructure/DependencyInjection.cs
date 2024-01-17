@@ -27,6 +27,7 @@ namespace Infrastructure
             services.AddTransient<IStoreLocationRepository, StoreLocationRepository>();
             services.AddTransient<IStoreStatusRepository, StoreStatusRepository>();
             services.AddTransient<IStoreDocumentsRepository, StoreDocumentsRepository>();
+            services.AddTransient<IMapSettingsRepository, MapSettingsRepository>();
             #endregion
 
             services.AddTransient<IMailService, MailService>();

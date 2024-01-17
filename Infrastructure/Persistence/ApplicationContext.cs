@@ -1,7 +1,9 @@
 ﻿
 using Domain.Common;
 using Domain.Entities;
+using Domain.Entities.App;
 using Domain.ModelBuilders;
+using Domain.ModelBuilders.App;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -26,6 +28,9 @@ namespace Infrastructure.Persistence
         public DbSet<StoreLocation> StoreLocation { get; set; }
         public DbSet<StoreStatus> StoreStatus { get; set; }
         public DbSet<StoreDocuments> StoreDocuments { get; set; }
+
+        // app schema
+        public DbSet<MapSettings> MapSettings { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,6 +50,9 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Store>(StoreModelBuilder.Get());
             modelBuilder.Entity<StoreStatus>(StoreStatusModelBuilder.Get());
             modelBuilder.Entity<StoreDocuments>(StoreDocumentsModelBuilder.Get());
+
+            // app schema
+            modelBuilder.Entity<MapSettings>(MapSettingsModelBuilder.Get());
             #endregion
         }
 

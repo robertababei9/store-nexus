@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Domain.Dto.Stores;
 using Common.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Queries.Stores
 {
@@ -17,9 +18,13 @@ namespace Application.Queries.Stores
         // Handler
         public class Handler : IRequestHandler<Query, Response>
         {
+            protected IHttpContextAccessor _httpContextAccessor { get; set; }
             protected IStoreRepository _storeRepository { get; set; }
-            public Handler(IStoreRepository storeRepository)
+
+            public Handler(IHttpContextAccessor httpContextAccessor,
+                IStoreRepository storeRepository)
             {
+                _httpContextAccessor = httpContextAccessor;
                 _storeRepository = storeRepository;
             }
 
@@ -27,9 +32,12 @@ namespace Application.Queries.Stores
             {
                 var response = new ApiResponseModel<IEnumerable<StoreLocationGroup>>();
 
+                var loggedInUserCompanyId = _httpContextAccessor.HttpContext.User.FindFirst("CompanyId")?.Value;
+
                 var allStoresGrouped = _storeRepository
                         .GetAllQueryable()
                             .Include(x => x.StoreLocation)
+                        .Where(x => x.CompanyId == Guid.Parse(loggedInUserCompanyId))
                         .GroupBy(x => x.StoreLocation.Country)
                         .ToList();
 

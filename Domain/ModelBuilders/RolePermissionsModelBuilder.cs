@@ -10,7 +10,7 @@ namespace Domain.ModelBuilders
             return
                 entity =>
                 {
-
+                    // Schema was defined in the entity file
                 };
         }
     }
